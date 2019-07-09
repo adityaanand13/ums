@@ -5,6 +5,7 @@ enum class Gender(gender: String) {
     FEMALE("female"),
     TRANSGENDER("transgender");
 
+
     companion object  {
         fun toEnum(key: String?): Gender? {
             if (key == null) {
