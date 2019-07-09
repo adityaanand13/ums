@@ -2,7 +2,8 @@ package com.aditya.ums.enums
 
 enum class Gender(gender: String) {
     MALE("male"),
-    FEMALE("female");
+    FEMALE("female"),
+    TRANSGENDER("tramsgemnder");
 
     companion object  {
         fun toEnum(key: String?): Gender? {
