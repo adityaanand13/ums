@@ -1,6 +1,5 @@
 package com.aditya.ums.api.request
 
-import com.aditya.ums.entity.Student
 import com.aditya.ums.enums.*
 
 class UserRequest (
@@ -21,5 +20,5 @@ class UserRequest (
     val pinCode: String,
     val country: String,
     val password: String,
-    val student: Student
+    val student: StudentRequest
 )
