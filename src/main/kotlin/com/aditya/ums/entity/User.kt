@@ -1,11 +1,9 @@
 package com.aditya.ums.entity
 
-import com.aditya.ums.enums.Blood
-import com.aditya.ums.enums.Category
-import com.aditya.ums.enums.Gender
-import com.aditya.ums.enums.UserType
-import javax.management.relation.Role
+import com.aditya.ums.enums.*
 import javax.persistence.*
+import javax.persistence.CascadeType
+import javax.persistence.OneToOne
 
 @Entity
 @Table(name = "user")
@@ -13,7 +11,7 @@ class User (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: Long,
+    var id: Int,
 
     @Column(name = "first_name")
     var firstName: String,
@@ -37,7 +35,7 @@ class User (
 
     @Enumerated(EnumType.STRING)
     @Column(name = "religion")
-    var religion : String,
+    var religion : Religion,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
@@ -69,7 +67,6 @@ class User (
     @Column(name = "country")
     var country: String,
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "auth_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    var role: Set<Role>
+    @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
+    var student: Student
 )
