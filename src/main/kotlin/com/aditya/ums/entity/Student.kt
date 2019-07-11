@@ -14,6 +14,11 @@ class Student (
         @Column(name = "id")
         var id: Long,
 
+        //@MapsId tells Hibernate to use the id column of address as both primary key and foreign key. Also, notice that the @Id column of the Address entity no longer uses the @GeneratedValue annotation.
+        @OneToOne
+        @MapsId
+        var user: User,
+
         @Column(name = "roll_no")
         var rollNo : Int,
 
@@ -61,5 +66,7 @@ class Student (
 
         @Column(name = "family_income")
         var familyIncome: Int
+
+
 
 )
