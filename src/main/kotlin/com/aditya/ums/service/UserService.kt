@@ -19,9 +19,24 @@ class UserService (
             throw BadRequestException("Invalid Request")
         }
         val user = User(
+            id = userRequest.id,
             firstName = userRequest.firstName,
             lastName = userRequest.lastName,
-            email = userRequest.email
+            email = userRequest.email,
+            gender = userRequest.gender,
+            phone = userRequest.phone,
+            blood = userRequest.blood,
+            religion = userRequest.religion,
+            category = userRequest.category,
+            aadhar = userRequest.aadhar,
+            address = userRequest.address,
+            city = userRequest.city,
+            state = userRequest.state,
+            pinCode = userRequest.pinCode,
+            country = userRequest.country,
+            userType = userRequest.userType,
+            password = userRequest.password,
+            student = userRequest.student
         )
         return userRepository.save(user)
     }
@@ -39,9 +54,24 @@ class UserService (
             throw BadRequestException("Invalid Request")
         }
         val user = User(
+                id = userRequest.id,
                 firstName = userRequest.firstName,
                 lastName = userRequest.lastName,
-                email = userRequest.email
+                email = userRequest.email,
+                gender = userRequest.gender,
+                phone = userRequest.phone,
+                blood = userRequest.blood,
+                religion = userRequest.religion,
+                category = userRequest.category,
+                aadhar = userRequest.aadhar,
+                address = userRequest.address,
+                city = userRequest.city,
+                state = userRequest.state,
+                pinCode = userRequest.pinCode,
+                country = userRequest.country,
+                userType = userRequest.userType,
+                password = userRequest.password,
+                student = userRequest.student
         )
         return userRepository.save(user)
     }
