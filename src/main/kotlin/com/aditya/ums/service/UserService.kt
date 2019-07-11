@@ -49,7 +49,7 @@ class UserService (
         userRepository.deleteById(id)
     }
 
-    fun updateUser (userRequest: UserRequest): User {
+    fun updateUser (userRequest: UserRequest): User{
         if(userRequest.id == null || userRequest.firstName.isBlank() || userRequest.email.isBlank()) {
             throw BadRequestException("Invalid Request")
         }
