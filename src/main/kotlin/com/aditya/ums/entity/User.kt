@@ -1,6 +1,7 @@
 package com.aditya.ums.entity
 
 import com.aditya.ums.enums.*
+import java.time.LocalDate
 import javax.persistence.*
 import javax.persistence.CascadeType
 import javax.persistence.OneToOne
@@ -11,7 +12,7 @@ class User (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: Int,
+    var id: Int? = null,
 
     @Column(name = "first_name")
     var firstName: String,
@@ -21,6 +22,9 @@ class User (
 
     @Column(name = "email")
     var email: String,
+
+    @Column(name = "DOB")
+    var DOB: LocalDate,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
@@ -68,5 +72,5 @@ class User (
     var country: String,
 
     @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
-    var student: Student
+    var student: Student? = null
 )
