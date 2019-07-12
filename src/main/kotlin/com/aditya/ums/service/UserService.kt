@@ -2,6 +2,7 @@ package com.aditya.ums.service
 
 import com.aditya.ums.api.BadRequestException
 import com.aditya.ums.api.request.UserRequest
+import com.aditya.ums.entity.Student
 import com.aditya.ums.entity.User
 import com.aditya.ums.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -19,10 +20,10 @@ class UserService (
             throw BadRequestException("Invalid Request")
         }
         val user = User(
-            id = userRequest.id,
             firstName = userRequest.firstName,
             lastName = userRequest.lastName,
             email = userRequest.email,
+            DOB = userRequest.DOB,
             gender = userRequest.gender,
             phone = userRequest.phone,
             blood = userRequest.blood,
@@ -35,8 +36,7 @@ class UserService (
             pinCode = userRequest.pinCode,
             country = userRequest.country,
             userType = userRequest.userType,
-            password = userRequest.password,
-            student = userRequest.student
+            password = userRequest.password
         )
         return userRepository.save(user)
     }
@@ -58,6 +58,7 @@ class UserService (
                 firstName = userRequest.firstName,
                 lastName = userRequest.lastName,
                 email = userRequest.email,
+                DOB = userRequest.DOB,
                 gender = userRequest.gender,
                 phone = userRequest.phone,
                 blood = userRequest.blood,
@@ -70,8 +71,7 @@ class UserService (
                 pinCode = userRequest.pinCode,
                 country = userRequest.country,
                 userType = userRequest.userType,
-                password = userRequest.password,
-                student = userRequest.student
+                password = userRequest.password
         )
         return userRepository.save(user)
     }
