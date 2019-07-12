@@ -12,8 +12,9 @@ package com.aditya.ums.enums
  */
 
 enum class Category (category: String) {
+    GENERAL("General"),
     FF("Freedom Fighters"),
-    BCA ("Backward caste group A"),
+    BCA ( "Backward caste group A"),
     BCB("Backward caste group B"),
     ST ("Scheduled Tribe"),
     SC ("Scheduled Caste"),

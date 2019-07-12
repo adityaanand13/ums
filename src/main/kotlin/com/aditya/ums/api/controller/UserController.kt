@@ -1,8 +1,8 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.MetaType
 import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.UserRequest
+import com.aditya.ums.converter.UserConverter
 import com.aditya.ums.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -62,9 +62,10 @@ class UserController(
     @GetMapping("/search-firstname/{firstName}")
     fun searchByFirstName(@PathVariable("firstName", required = true) firstName: String): ResponseEntity<Response>{
         val user = userService.searchByName(firstName)
+        val userResponse = UserConverter.convertToResponse(user)
         val usersResponse = Response()
                 .success(true)
-                .data(user)
+                .data(userResponse)
                 .contentType("application/json")
                 .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
         return ResponseEntity(usersResponse, HttpStatus.OK)
