@@ -1,11 +1,13 @@
 package com.aditya.ums.api.request
 
 import com.aditya.ums.enums.*
+import java.time.LocalDate
 
 class UserRequest (
     val id: Int,
     val firstName: String,
     val lastName: String? = null,
+    val DOB: LocalDate,
     val email: String,
     val gender: Gender,
     val phone: String,
@@ -19,6 +21,5 @@ class UserRequest (
     val state: String,
     val pinCode: String,
     val country: String,
-    val password: String,
-    val student: StudentRequest
+    val password: String
 )
