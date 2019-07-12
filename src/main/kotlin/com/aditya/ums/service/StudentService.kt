@@ -29,22 +29,16 @@ class StudentService (
 //            throw BadRequestException("Invalid Request")
 //        }
         val user: User = userService.createUser(studentRequest.user)
-        val student = Student(
-            user = user,
-            rollNo = studentRequest.rollNo,
-            batch = studentRequest.batch,
-            localAddress = studentRequest.localAddress,
-            nationality = studentRequest.nationality,
-            fathersName = studentRequest.fathersName,
-            fathersPhone = studentRequest.fathersPhone,
-            fathersIncome = studentRequest.fathersIncome,
-            fathersOccupation = studentRequest.fathersOccupation,
-            mothersName = studentRequest.mothersName,
-            mothersPhone = studentRequest.mothersPhone,
-            mothersIncome = studentRequest.mothersIncome,
-            mothersOccupation = studentRequest.mothersOccupation,
-            familyIncome = studentRequest.familyIncome
-        )
-        return studentRepository.save(student)
+        return studentRepository.
+            save(
+                StudentConverter.convertToEntity(
+                    studentRequest,
+                    user
+                )
+            )
     }
+
+    /*fun searchByName(firstName: String) :Student {
+        return studentRepository.findFirstByFirstName(firstName)
+    }*/
 }

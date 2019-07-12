@@ -34,6 +34,6 @@ class Instructor (
             CascadeType.REFRESH
         ]
     )//        fetch = FetchType.EAGER,
-    var courses: List<Course>
+    var courses: List<Course>? = null
 
 )
