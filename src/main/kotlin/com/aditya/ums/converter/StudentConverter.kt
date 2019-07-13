@@ -7,6 +7,10 @@ import com.aditya.ums.entity.User
 
 class StudentConverter {
     companion object {
+        fun convertToResponses(students: List<Student>): List<StudentResponse>{
+            return students.map { student -> convertToResponse(student) }
+        }
+
         fun convertToResponse(student: Student): StudentResponse {
             return StudentResponse (
                 rollNo = student.rollNo,

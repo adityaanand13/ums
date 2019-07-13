@@ -13,17 +13,18 @@ class InstructorConverter {
         }
 
         fun convertToResponse (instructor: Instructor) : InstructorResponse{
+            println(instructor.courses)
             return InstructorResponse(
                     employeeID = instructor.employeeID,
                     user = UserConverter.convertToResponse(instructor.user),
-                    coursesResponse = CourseConverter.convertToResponses(instructor.courses!!)
+                    coursesResponses = CourseConverter.convertToResponses(instructor.courses!!)
             )
         }
 
         fun convertToEntity(instructorRequest: InstructorRequest, user: User): Instructor{
             return Instructor(
-                    user = user,
-                    employeeID = instructorRequest.employeeID
+                user = user,
+                employeeID = instructorRequest.employeeID
             )
         }
     }

@@ -5,6 +5,7 @@ import com.aditya.ums.api.response.StudentResponse
 import com.aditya.ums.converter.StudentConverter
 import com.aditya.ums.entity.Student
 import com.aditya.ums.entity.User
+import com.aditya.ums.enums.UserType
 import com.aditya.ums.repository.StudentRepository
 import org.springframework.stereotype.Service
 
@@ -15,13 +16,7 @@ class StudentService (
 ){
     //returns list of all the students in the DB
     fun getAll(): List<StudentResponse> {
-        var studentResponses : List<StudentResponse>
-        studentResponses = ArrayList()
-
-        for (student in studentRepository.findAll())
-            studentResponses.add(StudentConverter.convertToResponse(student))
-
-        return studentResponses
+        return StudentConverter.convertToResponses(studentRepository.findAll())
     }
 
     fun create(studentRequest: StudentRequest) : Student {
@@ -38,7 +33,8 @@ class StudentService (
             )
     }
 
-    /*fun searchByName(firstName: String) :Student {
-        return studentRepository.findFirstByFirstName(firstName)
-    }*/
+    fun searchByName(firstName: String): Student {
+        return studentRepository.
+                findFirstByUserFirstNameAndUserUserType(firstName, UserType.STUDENT)
+    }
 }

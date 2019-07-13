@@ -2,6 +2,7 @@ package com.aditya.ums.api.controller
 
 import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.StudentRequest
+import com.aditya.ums.converter.StudentConverter
 import com.aditya.ums.service.StudentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -37,15 +38,14 @@ class StudentController(
         return ResponseEntity(studentResponse, HttpStatus.OK)
     }
 
-    /*@GetMapping("/search-firstname/{firstName}")
+    @GetMapping("/search-firstname/{firstName}")
     fun searchByFirstName(@PathVariable("firstName", required = true) firstName: String): ResponseEntity<Response>{
         val student = studentService.searchByName(firstName)
-        val userResponse = UserConverter.convertToResponse(user)
-        val usersResponse = Response()
+        val studentResponse = Response()
                 .success(true)
-                .data(userResponse)
+                .data(StudentConverter.convertToResponse(student))
                 .contentType("application/json")
                 .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
-        return ResponseEntity(usersResponse, HttpStatus.OK)
-    }*/
+        return ResponseEntity(studentResponse, HttpStatus.OK)
+    }
 }

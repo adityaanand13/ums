@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class CourseService(
-        private val studentService: StudentService,
-        private val instructorService: InstructorService,
         private val courseRepository: CourseRepository
 ) {
     fun getAll(): List<CourseResponse>{
@@ -22,8 +20,12 @@ class CourseService(
 //            throw BadRequestException("Invalid Request")
 //        }
         return courseRepository.
-                save(
-                        CourseConverter.convertToEntity(courseRequest)
-                )
+            save(
+                CourseConverter.convertToEntity(courseRequest)
+            )
+    }
+
+    fun getById(id: Int): Course{
+        return courseRepository.getOne(id)
     }
 }
