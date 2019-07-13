@@ -2,8 +2,8 @@ package com.aditya.ums.service
 
 import com.aditya.ums.api.BadRequestException
 import com.aditya.ums.api.request.UserRequest
-import com.aditya.ums.entity.Student
 import com.aditya.ums.entity.User
+import com.aditya.ums.enums.UserType
 import com.aditya.ums.repository.UserRepository
 import org.springframework.stereotype.Service
 
@@ -78,6 +78,10 @@ class UserService (
 
     fun searchByName(firstName: String) :User {
         return userRepository.findFirstByFirstName(firstName)
+    }
+
+    fun SearchByNameAndType(firstName: String, userType: UserType): User {
+        return userRepository.findFirstByFirstNameAndUserType(firstName, userType)
     }
 
 }

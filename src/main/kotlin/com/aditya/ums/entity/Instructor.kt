@@ -2,6 +2,8 @@ package com.aditya.ums.entity
 
 import javax.persistence.*
 
+@Entity
+@Table(name = "instructor")
 class Instructor (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +36,5 @@ class Instructor (
             CascadeType.REFRESH
         ]
     )//        fetch = FetchType.EAGER,
-    var courses: List<Course>
-
+    var courses: MutableList<Course>? = null
 )

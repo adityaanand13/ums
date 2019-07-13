@@ -2,6 +2,7 @@ package com.aditya.ums.enums
 
 enum class UserType (userType: String) {
     ADMIN("admin"),
+    INSTRUCTOR("instructor"),
     STUDENT("student");
 
 

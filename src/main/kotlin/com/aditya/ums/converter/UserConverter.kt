@@ -1,6 +1,7 @@
 package com.aditya.ums.converter
 
 import com.aditya.ums.api.response.UserResponse
+import com.aditya.ums.entity.Student
 import com.aditya.ums.entity.User
 
 class UserConverter {
