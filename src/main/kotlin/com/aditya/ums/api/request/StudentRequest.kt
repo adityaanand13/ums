@@ -2,7 +2,6 @@ package com.aditya.ums.api.request
 
 class StudentRequest (
     var rollNo : Int,
-    var batch : String,
     var localAddress: String,
     var nationality: String,
     var fathersName: String,

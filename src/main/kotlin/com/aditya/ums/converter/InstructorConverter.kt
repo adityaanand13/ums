@@ -13,11 +13,9 @@ class InstructorConverter {
         }
 
         fun convertToResponse (instructor: Instructor) : InstructorResponse{
-            println(instructor.courses)
             return InstructorResponse(
                     employeeID = instructor.employeeID,
-                    user = UserConverter.convertToResponse(instructor.user),
-                    coursesResponses = CourseConverter.convertToResponses(instructor.courses!!)
+                    user = UserConverter.convertToResponse(instructor.user)
             )
         }
 

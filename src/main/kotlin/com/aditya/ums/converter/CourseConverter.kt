@@ -20,8 +20,11 @@ class CourseConverter {
 
         fun convertToEntity(courseRequest: CourseRequest): Course{
             return Course(
+                    id = courseRequest.id,
                     name = courseRequest.name,
-                    description = courseRequest.descrition
+                    description = courseRequest.descrition,
+                    college = CollegeConverter.convertToEntity(courseRequest.college),
+                    duration = courseRequest.duration
             )
         }
     }

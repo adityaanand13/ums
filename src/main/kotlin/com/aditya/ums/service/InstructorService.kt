@@ -1,10 +1,7 @@
 package com.aditya.ums.service
 
-import com.aditya.ums.api.request.AddCourseRequest
 import com.aditya.ums.api.request.InstructorRequest
-import com.aditya.ums.api.response.InstructorResponse
 import com.aditya.ums.converter.InstructorConverter
-import com.aditya.ums.entity.Course
 import com.aditya.ums.entity.Instructor
 import com.aditya.ums.entity.User
 import com.aditya.ums.enums.UserType
@@ -42,16 +39,16 @@ class InstructorService (
         return instructorRepository.findFirstByEmployeeID(employeeID)
     }
 
-    fun addCourse(addCourseRequest: AddCourseRequest): Instructor{
-        var instructor = getByEmployeeID(addCourseRequest.employeeID)
-        if(instructor!= null){
-            var course = courseService.getById(addCourseRequest.courseID)
-            if (course!=null){
-                course.instructor=instructor
-                instructor.courses!!.add(course)
-                instructor = instructorRepository.save(instructor)
-            }
-        }
-        return instructor
-    }
+//    fun addCourse(addCourseRequest: AddCourseRequest): Instructor{
+//        var instructor = getByEmployeeID(addCourseRequest.employeeID)
+//        if(instructor!= null){
+//            var course = courseService.getById(addCourseRequest.courseID)
+//            if (course!=null){
+//                course.instructor=instructor
+//                instructor.courses!!.add(course)
+//                instructor = instructorRepository.save(instructor)
+//            }
+//        }
+//        return instructor
+//    }
 }

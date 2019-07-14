@@ -75,5 +75,8 @@ class User (
     var student: Student? = null,
 
     @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
-    var instructor: Instructor? = null
+    var instructor: Instructor? = null,
+
+    @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
+    var principal: Principal? = null
 )

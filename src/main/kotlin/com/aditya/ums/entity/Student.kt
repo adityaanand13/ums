@@ -21,10 +21,6 @@ class Student (
     @Column(name = "roll_no")
     var rollNo : Int,
 
-    //todo refactoring
-    @Column(name = "batch")
-    var batch : String,
-
     @Column(name = "local_address")
     var localAddress: String,
 
@@ -55,17 +51,16 @@ class Student (
     var mothersPhone: String,
 
     @Column(name = "mothers_income")
-    var mothersIncome: Int? = 0,
+    var mothersIncome: Int = 0,
 
     @Column(name = "mothers_occupation")
     var mothersOccupation: String,
 
     @Column(name = "family_income")
-    var familyIncome: Int,
+    var familyIncome: Int = 0,
 
-    // many students can have many courses
-    @ManyToMany(
-        fetch = FetchType.LAZY,
+    // many students can have one Group
+    @ManyToOne(
         cascade = [
             CascadeType.PERSIST,
             CascadeType.MERGE,
@@ -74,9 +69,12 @@ class Student (
         ]
     )
     @JoinTable(
-        name = "course_student",
+        name = "student_group",
         joinColumns = [JoinColumn(name = "student_id")],
-        inverseJoinColumns = [JoinColumn(name = "course_id")]
+        inverseJoinColumns = [JoinColumn(name = "group_id")]
     )
-    private var courses: MutableList<Course>? = null
+    private var group: Group? = null
+
+//    @OneToMany(mappedBy = "student_id")
+//    var attendances: MutableList<Attendance> = arrayListOf()
 )

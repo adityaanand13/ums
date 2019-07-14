@@ -3,8 +3,8 @@ package com.aditya.ums.entity
 import javax.persistence.*
 
 @Entity
-@Table(name = "course")
-class Course (
+@Table(name = "batch")
+class Batch (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -16,10 +16,7 @@ class Course (
     @Column(name = "description")
     var description: String,
 
-    @Column(name = "duration")
-    var duration: Int,
-
-    //course should be associated with college
+    //batch should be associated with courses
     @ManyToOne(
         cascade = [
             CascadeType.DETACH,
@@ -28,12 +25,12 @@ class Course (
             CascadeType.REFRESH
         ]
     )
-    @JoinColumn(name = "college_id")
-    var college: College,
-//
-    // One course can have multiple batches
+    @JoinColumn(name = "course_id")
+    var course: Course,
+
+    //one batch can have multiple semesters
     @OneToMany(
-            mappedBy = "course",
+            mappedBy = "batch",
             cascade = [
                 CascadeType.DETACH,
                 CascadeType.MERGE,
@@ -41,5 +38,5 @@ class Course (
                 CascadeType.REFRESH
             ]
     )//        fetch = FetchType.EAGER,
-    var batches: MutableList<Batch> = arrayListOf()
+    var semesters: MutableList<Semester> = arrayListOf()
 )
