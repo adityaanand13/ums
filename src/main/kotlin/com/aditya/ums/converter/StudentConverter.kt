@@ -14,7 +14,6 @@ class StudentConverter {
         fun convertToResponse(student: Student): StudentResponse {
             return StudentResponse (
                 rollNo = student.rollNo,
-                batch = student.batch,
                 localAddress = student.localAddress,
                 nationality = student.nationality,
                 fathersName = student.fathersName,
@@ -34,7 +33,6 @@ class StudentConverter {
             return Student(
                 user = user,
                 rollNo = studentRequest.rollNo,
-                batch = studentRequest.batch,
                 localAddress = studentRequest.localAddress,
                 nationality = studentRequest.nationality,
                 fathersName = studentRequest.fathersName,
@@ -43,7 +41,7 @@ class StudentConverter {
                 fathersOccupation = studentRequest.fathersOccupation,
                 mothersName = studentRequest.mothersName,
                 mothersPhone = studentRequest.mothersPhone,
-                mothersIncome = studentRequest.mothersIncome,
+                mothersIncome = studentRequest.mothersIncome ?: 0,
                 mothersOccupation = studentRequest.mothersOccupation,
                 familyIncome = studentRequest.familyIncome
             )
