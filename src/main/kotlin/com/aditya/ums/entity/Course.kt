@@ -8,7 +8,7 @@ class Course (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    var id: Int = 0,
+    var id: Int? = null,
 
     @Column(name = "name")
     var name: String,
@@ -16,6 +16,7 @@ class Course (
     @Column(name = "description")
     var description: String,
 
+    //course should be associated with college
     @ManyToOne(
         cascade = [
             CascadeType.DETACH,
@@ -24,15 +25,18 @@ class Course (
             CascadeType.REFRESH
         ]
     )
-    @JoinColumn(name = "instructor_id")
-    var instructor: Instructor? = null,
-
-    //many students can have many courses
-    @ManyToMany
-    @JoinTable(
-        name = "course_student",
-        joinColumns = [JoinColumn(name = "course_id")],
-        inverseJoinColumns = [JoinColumn(name = "student_id")]
-    )
-    var students: MutableList<Student>? = null
+    @JoinColumn(name = "college_id")
+    var college: College,
+//
+    // One course can have multiple batches
+    @OneToMany(
+            mappedBy = "course",
+            cascade = [
+                CascadeType.DETACH,
+                CascadeType.MERGE,
+                CascadeType.PERSIST,
+                CascadeType.REFRESH
+            ]
+    )//        fetch = FetchType.EAGER,
+    var batches: MutableList<Batch> = arrayListOf()
 )
