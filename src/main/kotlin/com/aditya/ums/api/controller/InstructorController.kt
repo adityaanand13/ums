@@ -39,14 +39,14 @@ class InstructorController(
         return ResponseEntity(instructorResponse, HttpStatus.OK)
     }
 
-    @PostMapping("/add-course")
-    fun addCourse(@Valid @RequestBody addCourseRequest: AddCourseRequest): ResponseEntity<Response> {
-        val instructor =  instructorService.addCourse(addCourseRequest)
-        val instructorResponse = Response()
-                .success(true)
-                .data(InstructorConverter.convertToResponse(instructor))
-                .contentType("application/json")
-                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
-        return ResponseEntity(instructorResponse, HttpStatus.OK)
-    }
+//    @PostMapping("/add-course")
+//    fun addCourse(@Valid @RequestBody addCourseRequest: AddCourseRequest): ResponseEntity<Response> {
+//        val instructor =  instructorService.addCourse(addCourseRequest)
+//        val instructorResponse = Response()
+//                .success(true)
+//                .data(InstructorConverter.convertToResponse(instructor))
+//                .contentType("application/json")
+//                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+//        return ResponseEntity(instructorResponse, HttpStatus.OK)
+//    }
 }
