@@ -19,7 +19,7 @@ class Instructor (
     var user: User,
 
     @Column(name = "employee_id")
-    var employeeID : Int,
+    var employeeID : Int
 
 /*
     refers to instructor property in the course class @ JoinColumn
@@ -27,14 +27,14 @@ class Instructor (
      the delete cascade is not defined because
      when we want to delete the course we dont want to delete the instructor and vice versa
  */
-    @OneToMany(
-        mappedBy = "instructor",
-        cascade = [
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-        ]
-    )//        fetch = FetchType.EAGER,
-    var courses: MutableList<Course>? = null
+//    @OneToMany(
+//        mappedBy = "instructor",
+//        cascade = [
+//            CascadeType.DETACH,
+//            CascadeType.MERGE,
+//            CascadeType.PERSIST,
+//            CascadeType.REFRESH
+//        ]
+//    )//        fetch = FetchType.EAGER,
+//    var courses: MutableList<Course>? = null
 )
