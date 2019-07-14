@@ -16,6 +16,9 @@ class Course (
     @Column(name = "description")
     var description: String,
 
+    @Column(name = "duration")
+    var duration: Int,
+
     //course should be associated with college
     @ManyToOne(
         cascade = [
