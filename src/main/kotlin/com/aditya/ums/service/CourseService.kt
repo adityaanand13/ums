@@ -1,18 +1,20 @@
 package com.aditya.ums.service
 
+import com.aditya.ums.api.request.BatchRequest
 import com.aditya.ums.api.request.CourseRequest
-import com.aditya.ums.api.response.CourseResponse
 import com.aditya.ums.converter.CourseConverter
+import com.aditya.ums.entity.Batch
 import com.aditya.ums.entity.Course
 import com.aditya.ums.repository.CourseRepository
 import org.springframework.stereotype.Service
 
 @Service
 class CourseService(
-        private val courseRepository: CourseRepository
+        private val courseRepository: CourseRepository,
+        private val batchService: BatchService
 ) {
-    fun getAll(): List<CourseResponse>{
-        return CourseConverter.convertToResponses(courseRepository.findAll())
+    fun getAll(): List<Course>{
+        return courseRepository.findAll()
     }
 
     fun create(courseRequest: CourseRequest) : Course {
@@ -27,5 +29,20 @@ class CourseService(
 
     fun getById(id: Int): Course{
         return courseRepository.getOne(id)
+    }
+
+    fun getAllByCollegeId(collegeId: Int): List<Course>{
+        return courseRepository.getAllByCollege_Id(collegeId)
+    }
+
+    fun addBatch(courseID: Int, batchRequest: BatchRequest): Course{
+        var course = courseRepository.getOne(courseID)
+        if(course!= null){
+            val batch: Batch = batchService.create(batchRequest)
+            batch.course=course
+            course.batches.add(batch)
+            course = courseRepository.save(course)
+        }
+        return course
     }
 }
