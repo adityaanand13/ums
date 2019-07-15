@@ -25,7 +25,7 @@ class Semester(
         ]
     )
     @JoinColumn(name = "Batch_id")
-    var batch: Batch,
+    var batch: Batch? = null,
 
     //one semester can have multiple sections
     @OneToMany(

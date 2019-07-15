@@ -26,7 +26,7 @@ class Section(
             ]
         )
         @JoinColumn(name = "semester_id")
-        var semester: Semester,
+        var semester: Semester? = null,
 
         //one section can have multiple groups
         @OneToMany(

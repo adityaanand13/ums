@@ -29,17 +29,12 @@ class Course (
         ]
     )
     @JoinColumn(name = "college_id")
-    var college: College,
+    var college: College? = null,
 //
     // One course can have multiple batches
     @OneToMany(
             mappedBy = "course",
-            cascade = [
-                CascadeType.DETACH,
-                CascadeType.MERGE,
-                CascadeType.PERSIST,
-                CascadeType.REFRESH
-            ]
+            cascade = [CascadeType.ALL]
     )//        fetch = FetchType.EAGER,
     var batches: MutableList<Batch> = arrayListOf()
 )
