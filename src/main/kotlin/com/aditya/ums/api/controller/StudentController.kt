@@ -21,7 +21,7 @@ class StudentController(
         val students = studentService.getAll()
         val studentsResponse = Response()
                 .success(true)
-                .data(students)
+                .data(StudentConverter.convertToResponses(students))
                 .contentType("application/json")
                 .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
         return ResponseEntity(studentsResponse, HttpStatus.OK)
@@ -32,13 +32,13 @@ class StudentController(
         val student = studentService.create(studentRequest)
         val studentResponse = Response()
                 .success(true)
-                .data(student)
+                .data(StudentConverter.convertToResponse(student))
                 .contentType("application/json")
                 .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
         return ResponseEntity(studentResponse, HttpStatus.OK)
     }
 
-    @GetMapping("/search-firstname/{firstName}")
+    @GetMapping("/search-firstName/{firstName}")
     fun searchByFirstName(@PathVariable("firstName", required = true) firstName: String): ResponseEntity<Response>{
         val student = studentService.searchByName(firstName)
         val studentResponse = Response()
