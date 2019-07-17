@@ -5,7 +5,6 @@ import java.time.LocalDate
 class StudentResponse (
         var rollNo : Int = 0,
         var DOB: LocalDate? = null,
-        var batch : String ? = null,
         var localAddress: String ? = null,
         var nationality: String ? = null,
         var fathersName: String? = null,

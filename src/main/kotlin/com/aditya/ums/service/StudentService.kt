@@ -15,8 +15,8 @@ class StudentService (
         private val studentRepository: StudentRepository
 ){
     //returns list of all the students in the DB
-    fun getAll(): List<StudentResponse> {
-        return StudentConverter.convertToResponses(studentRepository.findAll())
+    fun getAll(): List<Student> {
+        return studentRepository.findAll()
     }
 
     fun create(studentRequest: StudentRequest) : Student {

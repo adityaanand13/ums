@@ -16,6 +16,9 @@ class College (
     @Column(name = "description")
     var description: String,
 
+    @Column(name = "address")
+    var address: String,
+
     //one college can have multiple courses
     @OneToMany(
         mappedBy = "college",
@@ -33,4 +36,6 @@ class College (
         ]
     )
     var principal: Principal?=null
+
+    //TODO : Refactor -> add College Code and do so for all other Departmental Course
 )

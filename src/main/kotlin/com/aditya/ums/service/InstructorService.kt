@@ -38,17 +38,4 @@ class InstructorService (
     fun getByEmployeeID(employeeID: Int): Instructor{
         return instructorRepository.findFirstByEmployeeID(employeeID)
     }
-
-//    fun addCourse(addCourseRequest: AddCourseRequest): Instructor{
-//        var instructor = getByEmployeeID(addCourseRequest.employeeID)
-//        if(instructor!= null){
-//            var course = courseService.getById(addCourseRequest.courseID)
-//            if (course!=null){
-//                course.instructor=instructor
-//                instructor.courses!!.add(course)
-//                instructor = instructorRepository.save(instructor)
-//            }
-//        }
-//        return instructor
-//    }
 }

@@ -2,9 +2,9 @@ package com.aditya.ums.enums
 
 enum class UserType (userType: String) {
     ADMIN("admin"),
+    PRINCIPAL("principal"),
     INSTRUCTOR("instructor"),
     STUDENT("student");
-
 
     companion object  {
         fun toEnum(key: String?): UserType ? {

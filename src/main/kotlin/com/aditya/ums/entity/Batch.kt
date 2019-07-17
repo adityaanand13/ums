@@ -26,7 +26,7 @@ class Batch (
         ]
     )
     @JoinColumn(name = "course_id")
-    var course: Course,
+    var course: Course? = null,
 
     //one batch can have multiple semesters
     @OneToMany(

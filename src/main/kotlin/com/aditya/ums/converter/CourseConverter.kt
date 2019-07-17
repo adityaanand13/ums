@@ -13,8 +13,11 @@ class CourseConverter {
 
         fun convertToResponse(course: Course) : CourseResponse{
             return CourseResponse(
+                    id = course.id,
                     name = course.name,
-                    description = course.description
+                    description = course.description,
+                    duration = course.duration,
+                    batches = BatchConverter.convertToResponses(course.batches)
             )
         }
 
@@ -22,8 +25,7 @@ class CourseConverter {
             return Course(
                     id = courseRequest.id,
                     name = courseRequest.name,
-                    description = courseRequest.descrition,
-                    college = CollegeConverter.convertToEntity(courseRequest.college),
+                    description = courseRequest.description,
                     duration = courseRequest.duration
             )
         }
