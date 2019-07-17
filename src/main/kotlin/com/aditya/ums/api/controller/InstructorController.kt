@@ -1,7 +1,6 @@
 package com.aditya.ums.api.controller
 
 import com.aditya.ums.api.Response
-import com.aditya.ums.api.request.AddCourseRequest
 import com.aditya.ums.api.request.InstructorRequest
 import com.aditya.ums.converter.InstructorConverter
 import com.aditya.ums.service.InstructorService
