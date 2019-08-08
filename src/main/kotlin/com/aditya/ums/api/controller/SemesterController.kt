@@ -3,6 +3,7 @@ package com.aditya.ums.api.controller
 import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.SectionRequest
 import com.aditya.ums.converter.SemesterConverter
+import com.aditya.ums.entity.Semester
 import com.aditya.ums.service.SemesterService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -16,18 +17,29 @@ import javax.validation.Valid
 class SemesterController (
         @Autowired private val semesterService: SemesterService
 ){
-    @PostMapping("/{semester_id}/add-section")
+    @PostMapping("/{semesterId}/add-section")
     fun addSection(
-            @PathVariable("semester_id", required = true) semester_id:Int,
+            @PathVariable("semesterId", required = true) semesterId:Int,
             @Valid @RequestBody sectionRequest: SectionRequest
     ): ResponseEntity<Response> {
-        val semester = SemesterConverter.convertToResponse(semesterService.addSection(semester_id, sectionRequest))
+        val semester = SemesterConverter.convertToResponse(semesterService.addSection(semesterId, sectionRequest))
         val semesterResponse = Response()
                 .success(true)
                 .data(semester)
                 .contentType("/application/json")
                 .httpStatusCode(HttpStatus.OK.value())
                 .statusMessage("Success")
+        return ResponseEntity(semesterResponse, HttpStatus.OK)
+    }
+
+    @GetMapping("/{semesterId}")
+    fun getById(@PathVariable("semesterId", required = true) semesterId:Int): ResponseEntity<Response> {
+        val semester = SemesterConverter.convertToResponse(semesterService.getById(semesterId))
+        val semesterResponse = Response()
+                .success(true)
+                .data(semester)
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
         return ResponseEntity(semesterResponse, HttpStatus.OK)
     }
 }
