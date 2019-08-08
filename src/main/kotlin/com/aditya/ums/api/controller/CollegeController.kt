@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
+@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
 @RestController
 @RequestMapping("/api/college")
 @ResponseBody
@@ -56,6 +57,39 @@ class CollegeController(
         return ResponseEntity(collegeResponse,HttpStatus.OK)
     }
 
-    //todo : refactor: subordinate department should be added from the higher
+    @GetMapping("/{collegeId}")
+    fun getCollegeById(@PathVariable("collegeId", required = true) collegeId:Int): ResponseEntity<Response> {
+        val college = CollegeConverter.convertToResponse(collegeService.getById(collegeId))
+        val collegeResponse = Response()
+                .success(true)
+                .data(college)
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(collegeResponse, HttpStatus.OK)
+    }
 
+    @PutMapping("/{collegeId}")
+    fun updateCollege(
+            @PathVariable("collegeId", required = true) collegeId:Int,
+            @Valid @RequestBody collegeRequest: CollegeRequest
+    ): ResponseEntity<Response> {
+        collegeRequest.id = collegeId;
+        val college = CollegeConverter.convertToResponse(collegeService.update(collegeRequest))
+        val collegeResponse = Response()
+                .success(true)
+                .data(college)
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(collegeResponse, HttpStatus.OK)
+    }
+
+    @DeleteMapping("/{collegeId}")
+    fun deleteCollegeById(@PathVariable("collegeId", required = true) collegeId:Int): ResponseEntity<Response> {
+        collegeService.deleteById(collegeId)
+        val collegeResponse = Response()
+                .success(true)
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(collegeResponse, HttpStatus.OK)
+    }
 }
