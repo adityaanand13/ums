@@ -19,6 +19,9 @@ class College (
     @Column(name = "address")
     var address: String,
 
+    @Column(name = "code")
+    var code: String,
+
     //one college can have multiple courses
     @OneToMany(
         mappedBy = "college",
