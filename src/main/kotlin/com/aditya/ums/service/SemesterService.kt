@@ -14,6 +14,10 @@ class SemesterService (
         private val sectionService: SectionService
 ) {
 
+    fun getById(id: Int): Semester{
+        return semesterRepository.getOne(id)
+    }
+
     fun create (semesterRequest: SemesterRequest): Semester{
         return semesterRepository.save(SemesterConverter.convertToEntity(semesterRequest))
     }
