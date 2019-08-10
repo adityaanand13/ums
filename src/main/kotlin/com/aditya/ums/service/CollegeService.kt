@@ -22,8 +22,25 @@ class CollegeService (
         return collegeRepository.save(CollegeConverter.convertToEntity((collegeRequest)))
     }
 
+    fun update(collegeRequest: CollegeRequest): College{
+        val college = getById(collegeRequest.id)
+        college.name = collegeRequest.name
+        college.code = collegeRequest.code
+        college.address = collegeRequest.address
+        college.description = collegeRequest.description
+        return collegeRepository.save(college)
+    }
+
     fun searchByName(name: String): College{
         return collegeRepository.findFirstByName(name)
+    }
+
+    fun getById(id: Int): College{
+        return collegeRepository.getOne(id)
+    }
+
+    fun deleteById(id: Int) {
+        collegeRepository.deleteById(id)
     }
 
     fun addCourse(collegeID: Int, courseRequest: CourseRequest): College{
