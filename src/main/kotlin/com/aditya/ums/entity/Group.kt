@@ -25,7 +25,7 @@ class Group (
                 ]
         )
         @JoinColumn(name = "section_id")
-        var section: Section,
+        var section: Section? = null,
 
     //one group can have multiple students
     @OneToMany
