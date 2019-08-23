@@ -6,6 +6,7 @@ import com.aditya.ums.entity.College
 
 class CollegeConverter {
     companion object{
+
         fun convertToResponses(colleges: List<College>): List<CollegeResponse>{
             return colleges.map { college -> convertToResponse(college) }
         }
@@ -14,6 +15,7 @@ class CollegeConverter {
             return CollegeResponse(
                 id = college.id,
                 name = college.name,
+                code = college.code,
                 description = college.description,
                 address = college.address,
                 courses = CourseConverter.convertToResponses(college.courses)
@@ -23,8 +25,9 @@ class CollegeConverter {
         fun convertToEntity(collegeRequest:CollegeRequest): College{
             return College(
                 name = collegeRequest.name,
-                description = collegeRequest.descrition,
-                address = collegeRequest.address
+                description = collegeRequest.description,
+                address = collegeRequest.address,
+                code = collegeRequest.code
             )
         }
     }
