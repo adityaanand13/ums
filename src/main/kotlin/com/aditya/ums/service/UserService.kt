@@ -2,15 +2,28 @@ package com.aditya.ums.service
 
 import com.aditya.ums.api.BadRequestException
 import com.aditya.ums.api.request.UserRequest
+import com.aditya.ums.converter.UserConverter
 import com.aditya.ums.entity.User
 import com.aditya.ums.enums.UserType
 import com.aditya.ums.repository.UserRepository
+import com.aditya.ums.security.MyUserPrincipal
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class UserService (
+class UserService(
         private val userRepository: UserRepository
-) {
+) :UserDetailsService {
+
+    override fun loadUserByUsername(username: String?): UserDetails {
+        val user: User = userRepository.findByUsername(username)
+        if (user == null)
+            throw UsernameNotFoundException("User 404")
+        return MyUserPrincipal(user)
+    }
+
     fun getAll(): List<User> {
         return userRepository.findAll()
     }
@@ -19,25 +32,8 @@ class UserService (
         if(userRequest.firstName.isBlank() || userRequest.email.isBlank()) {
             throw BadRequestException("Invalid Request")
         }
-        val user = User(
-            firstName = userRequest.firstName,
-            lastName = userRequest.lastName,
-            email = userRequest.email,
-            DOB = userRequest.DOB,
-            gender = userRequest.gender,
-            phone = userRequest.phone,
-            blood = userRequest.blood,
-            religion = userRequest.religion,
-            category = userRequest.category,
-            aadhar = userRequest.aadhar,
-            address = userRequest.address,
-            city = userRequest.city,
-            state = userRequest.state,
-            pinCode = userRequest.pinCode,
-            country = userRequest.country,
-            userType = userRequest.userType,
-            password = userRequest.password
-        )
+        val user = UserConverter.convertToEntity(userRequest)
+//        user.password = userSecurityConfig.passwordEncoder().encode(user.password)
         return userRepository.save(user)
     }
 
@@ -53,26 +49,7 @@ class UserService (
         if(userRequest.id == null || userRequest.firstName.isBlank() || userRequest.email.isBlank()) {
             throw BadRequestException("Invalid Request")
         }
-        val user = User(
-                id = userRequest.id,
-                firstName = userRequest.firstName,
-                lastName = userRequest.lastName,
-                email = userRequest.email,
-                DOB = userRequest.DOB,
-                gender = userRequest.gender,
-                phone = userRequest.phone,
-                blood = userRequest.blood,
-                religion = userRequest.religion,
-                category = userRequest.category,
-                aadhar = userRequest.aadhar,
-                address = userRequest.address,
-                city = userRequest.city,
-                state = userRequest.state,
-                pinCode = userRequest.pinCode,
-                country = userRequest.country,
-                userType = userRequest.userType,
-                password = userRequest.password
-        )
+        val user = UserConverter.convertToEntity(userRequest)
         return userRepository.save(user)
     }
 
