@@ -33,7 +33,7 @@ class MyUserPrincipal(
     }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        var auth: MutableCollection<GrantedAuthority> = ArrayList()
+        val auth: MutableCollection< GrantedAuthority> = ArrayList()
         auth.add(SimpleGrantedAuthority(user.userType.toString()))
         return auth
     }
