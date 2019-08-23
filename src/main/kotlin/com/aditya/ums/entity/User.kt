@@ -14,6 +14,12 @@ class User (
     @Column(name = "id")
     var id: Int? = null,
 
+    @Column(name = "username")
+    var username: String,
+
+    @Column(name = "password")
+    var password: String,
+
     @Column(name = "first_name")
     var firstName: String,
 
@@ -51,9 +57,6 @@ class User (
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     var userType: UserType,
-
-    @Column(name = "password")
-    var password: String,
 
     //address
     @Column(name = "address")
