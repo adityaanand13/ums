@@ -5,6 +5,7 @@ import java.time.LocalDate
 
 class UserRequest (
     val id: Int,
+    val username: String,
     val firstName: String,
     val lastName: String? = null,
     val DOB: LocalDate,
