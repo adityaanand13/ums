@@ -8,4 +8,6 @@ interface UserRepository : JpaRepository<User, Int> {
     fun findByUsername(username: String?): User
     fun findFirstByFirstName(firstName : String): User
     fun findFirstByFirstNameAndUserType(firstName: String, userType: UserType): User
+    fun existsByUsername(username: String): Boolean
+    fun existsByEmail(it: String): Boolean?
 }
