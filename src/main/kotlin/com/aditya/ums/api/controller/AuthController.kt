@@ -48,7 +48,7 @@ public class AuthController(@Autowired var userRepository: UserRepository,
         return ResponseEntity.ok(JwtAuthenticationResponse(jwt));
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/addUser")
     public fun registerUser(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<ApiResponse>  {
         if(signUpRequest.username?.let { userRepository.existsByUsername(it) }!!) {
             return ResponseEntity(ApiResponse(false, "Username is already taken!"),
