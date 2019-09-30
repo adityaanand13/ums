@@ -1,10 +1,16 @@
 package com.aditya.ums.api.payload
 
+import com.aditya.ums.enums.*
+import java.time.LocalDate
 import javax.validation.constraints.*
 
 class SignUpRequest(@NotBlank
                     @Size(min = 4, max = 40)
-                    var name: String? = null,
+                    var firstName: String? = null,
+
+                    @NotBlank
+                    @Size(min = 4, max = 40)
+                    var lastName: String? = null,
 
                     @NotBlank
                     @Size(min = 3, max = 15)
