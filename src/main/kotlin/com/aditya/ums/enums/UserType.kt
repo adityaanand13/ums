@@ -4,7 +4,8 @@ enum class UserType (userType: String) {
     ADMIN("admin"),
     PRINCIPAL("principal"),
     INSTRUCTOR("instructor"),
-    STUDENT("student");
+    STUDENT("student"),
+    NORMAL("normal");
 
     companion object  {
         fun toEnum(key: String?): UserType ? {

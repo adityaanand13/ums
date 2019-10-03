@@ -1,5 +1,7 @@
 package com.aditya.ums.config
 
+import com.aditya.ums.security.JwtAuthenticationEntryPoint
+import com.aditya.ums.security.JwtAuthenticationFilter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -8,13 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.BeanIds
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.core.userdetails.UserDetailsService
-
 
 class SecurityConfig: WebSecurityConfigurerAdapter() {
     @Autowired val customUserDetailsService: CustomUserDetailService? = null
 
-    @Autowired private val unauthorizedHandler: JwtAuthenticationEntryPoint? = null
+    @Autowired val unauthorizedHandler: JwtAuthenticationEntryPoint? = null
 
     @Bean
     fun jwtAuthenticationFilter(): JwtAuthenticationFilter {
@@ -23,12 +23,12 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     public override fun configure(authenticationManagerBuilder: AuthenticationManagerBuilder) {
-        authenticationManagerBuilder
-                .userDetailsService(customUserDetailsService)
+        authenticationManagerBuilder.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder())
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
     @Throws(Exception::class)
     override fun authenticationManagerBean(): AuthenticationManager {
         return super.authenticationManagerBean()

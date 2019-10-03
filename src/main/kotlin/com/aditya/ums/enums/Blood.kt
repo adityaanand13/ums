@@ -8,7 +8,8 @@ enum class Blood (blood : String){
     ABPOS("AB+"),
     ABNEG("AB-"),
     OPOS("O+"),
-    ONEG("O-");
+    ONEG("O-"),
+    UNDEFINED("undefined");
 
     companion object  {
         fun toEnum(key: String?): Blood ? {

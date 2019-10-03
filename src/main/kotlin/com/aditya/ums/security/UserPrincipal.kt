@@ -19,17 +19,10 @@ class UserPrincipal(
         private val authorities: MutableCollection< GrantedAuthority> = ArrayList()
 ): UserDetails  {
 
-//    @Throws(UsernameNotFoundException)
-//    public fun loadUserByUsername(usernameOrEmail: String): UserDetails{
-//        val user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
-//                .orElseThrow({ UsernameNotFoundException("User not found with username or email : $usernameOrEmail") }
-//                )
-//    }
-
     companion object{
         fun create(user: User): UserPrincipal {
             val authorities: MutableCollection< GrantedAuthority> = ArrayList()
-            user.userType.stream().map { role -> authorities.add(SimpleGrantedAuthority((role.toString())))}
+            authorities.add(SimpleGrantedAuthority((user.userType.toString())))
 
             return UserPrincipal(
                     user.id,

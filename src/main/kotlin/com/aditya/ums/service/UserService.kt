@@ -1,7 +1,9 @@
 package com.aditya.ums.service
 
 import com.aditya.ums.api.BadRequestException
+import com.aditya.ums.api.payload.SignUpRequest
 import com.aditya.ums.api.request.UserRequest
+import com.aditya.ums.converter.SignUpConverter
 import com.aditya.ums.converter.UserConverter
 import com.aditya.ums.entity.User
 import com.aditya.ums.enums.UserType
@@ -29,11 +31,15 @@ class UserService(
     }
 
     fun createUser(userRequest: UserRequest) : User{
-        if(userRequest.firstName.isBlank() || userRequest.email.isBlank()) {
-            throw BadRequestException("Invalid Request")
-        }
+//        if(userRequest.firstName.isBlank() || userRequest.email.isBlank()) {
+//            throw BadRequestException("Invalid Request")
+//        } validated in request
         val user = UserConverter.convertToEntity(userRequest)
-//        user.password = userSecurityConfig.passwordEncoder().encode(user.password)
+        return userRepository.save(user)
+    }
+
+    fun createUser(signUpRequest: SignUpRequest) : User{
+        val user = SignUpConverter.convertToEntity(signUpRequest)
         return userRepository.save(user)
     }
 

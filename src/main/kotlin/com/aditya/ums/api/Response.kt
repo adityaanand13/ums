@@ -3,7 +3,7 @@ package com.aditya.ums.api
 import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-open class Response {
+open class Response() {
     var data: Any? = null
     var errors: Any? = null
     var success: Boolean = false
@@ -11,8 +11,6 @@ open class Response {
     var statusMessage: String? = null
     var responseHttpHeaders = mutableMapOf<String, String>()
     var contentType = "application/json; charset=utf-8"
-
-    constructor()
 
     fun data(data: Any): Response {
         this.data = data

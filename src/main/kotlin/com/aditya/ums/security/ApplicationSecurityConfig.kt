@@ -50,16 +50,4 @@ class ApplicationSecurityConfig: WebSecurityConfigurerAdapter() {
                 .logout()
                 .logoutSuccessUrl("/")
     }
-
-//    override fun configure(http: HttpSecurity?) {
-//        http?.
-//                csrf()?.disable()?.
-//                formLogin()?.
-//                loginPage("/login")?.permitAll()?.
-//                and()?.
-//                logout()?.invalidateHttpSession(true)?.
-//                clearAuthentication(true)?.
-//                logoutRequestMatcher(AntPathRequestMatcher("/logout"))?.
-//                logoutSuccessUrl("/logout-success")?.permitAll()
-//    }
 }

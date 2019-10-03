@@ -1,5 +1,6 @@
 package com.aditya.ums.security
 
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -21,10 +22,10 @@ class JwtAuthenticationFilter: OncePerRequestFilter() {
     @Autowired
     private val customUserDetailsService: CustomUserDetailsService? = null
 
-    private val logger = LoggerFactory.getLogger(JwtAuthenticationFilter::class.java)
+    private val log: Logger = LoggerFactory.getLogger(JwtAuthenticationFilter::class.java)
 
     @Throws(ServletException::class, IOException::class)
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+    protected override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         try {
             val jwt = getJwtFromRequest(request)
 
@@ -38,7 +39,8 @@ class JwtAuthenticationFilter: OncePerRequestFilter() {
                 SecurityContextHolder.getContext().authentication = authentication
             }
         } catch (ex: Exception) {
-           logger.error("Could not set user authentication in security context", ex)
+            log.error("Could not set user authentication in security context", ex)
+
         }
 
         filterChain.doFilter(request, response)

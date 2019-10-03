@@ -32,7 +32,6 @@ class UserConverter {
 
         fun convertToEntity(userRequest: UserRequest): User{
             return User(
-                id = userRequest.id,
                 username = userRequest.username,
                 password = userRequest.password,
                 firstName = userRequest.firstName,

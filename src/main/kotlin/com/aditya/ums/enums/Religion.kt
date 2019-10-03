@@ -8,7 +8,8 @@ enum class Religion (religion: String) {
     JAINISM("jainism"),
     ZOROASTRIANISM("zoroastrianism"),
     ATHEIST("atheist"),
-    OTHERS("others");
+    OTHERS("others"),
+    UNDEFINED("undefined");
 
 
     companion object  {
