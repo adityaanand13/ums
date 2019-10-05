@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-open class CustomUserDetailService
+class CustomUserDetailService
     (@Autowired val userRepository: UserRepository):
         UserDetailsService {
 
@@ -27,7 +27,7 @@ open class CustomUserDetailService
 
     // This method is used by JWTAuthenticationFilter
     @Transactional
-    open fun loadUserById(id: Long?): UserDetails {
+    fun loadUserById(id: Long?): UserDetails {
         val user = userRepository.findById(id).orElseThrow { UsernameNotFoundException("User not found with id : " + id!!) }
 
         return UserPrincipal.create(user)

@@ -82,5 +82,4 @@ class User (
 
         @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
     var principal: Principal? = null
-) {
-}
+)

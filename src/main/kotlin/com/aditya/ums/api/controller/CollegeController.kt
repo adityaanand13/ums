@@ -75,7 +75,7 @@ class CollegeController(
             @PathVariable("collegeId", required = true) collegeId:Int,
             @Valid @RequestBody collegeRequest: CollegeRequest
     ): ResponseEntity<Response> {
-        collegeRequest.id = collegeId;
+        collegeRequest.id = collegeId
         val college = CollegeConverter.convertToResponse(collegeService.update(collegeRequest))
         val collegeResponse = Response()
                 .success(true)

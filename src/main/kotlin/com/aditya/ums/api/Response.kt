@@ -3,7 +3,7 @@ package com.aditya.ums.api
 import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-open class Response() {
+open class Response {
     var data: Any? = null
     var errors: Any? = null
     var success: Boolean = false

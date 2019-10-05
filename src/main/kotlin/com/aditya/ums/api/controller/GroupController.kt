@@ -11,5 +11,4 @@ import org.springframework.web.bind.annotation.RestController
 @ResponseBody
 class GroupController(
         @Autowired private val groupService: GroupService
-) {
-}
+)

@@ -5,7 +5,7 @@ import org.springframework.boot.runApplication
 import java.util.*
 import javax.annotation.PostConstruct
 
-@SpringBootApplication(scanBasePackages = ["com.aditya.ums.config", "com.aditya.ums.service", "com.aditya.ums.repository", "com.aditya.ums.security", "com.aditya.ums.api.controller"])
+@SpringBootApplication(scanBasePackages = ["com.aditya.ums"])
 class UmsApplication{
     @PostConstruct
     fun init() {

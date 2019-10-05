@@ -25,7 +25,7 @@ class JwtAuthenticationFilter: OncePerRequestFilter() {
     private val log: Logger = LoggerFactory.getLogger(JwtAuthenticationFilter::class.java)
 
     @Throws(ServletException::class, IOException::class)
-    protected override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         try {
             val jwt = getJwtFromRequest(request)
 

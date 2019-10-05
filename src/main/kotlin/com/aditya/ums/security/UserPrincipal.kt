@@ -1,10 +1,10 @@
 package com.aditya.ums.security
 
 import com.aditya.ums.entity.User
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,7 +44,7 @@ class UserPrincipal(
     }
 
     override fun getUsername(): String {
-        return username;
+        return username
     }
 
     override fun isCredentialsNonExpired(): Boolean {
@@ -52,7 +52,7 @@ class UserPrincipal(
     }
 
     override fun getPassword(): String {
-        return password;
+        return password
     }
 
     override fun isAccountNonExpired(): Boolean {
@@ -60,7 +60,7 @@ class UserPrincipal(
     }
 
     override fun isAccountNonLocked(): Boolean {
-        return true;
+        return true
     }
 
     override fun equals(other: Any?): Boolean {

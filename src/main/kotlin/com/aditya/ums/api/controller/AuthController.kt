@@ -25,19 +25,19 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.util.Collections;
+import javax.validation.Valid
+import java.net.URI
+import java.util.Collections
 
 @RestController
 @RequestMapping("/api/admin")
-public class AuthController(@Autowired var userRepository: UserRepository,
-                            @Autowired var authenticationManager: AuthenticationManager,
-                            @Autowired var passwordEncoder: PasswordEncoder,
-                            @Autowired var tokenProvider: JwtTokenProvider) {
+class AuthController(@Autowired var userRepository: UserRepository,
+                     @Autowired var authenticationManager: AuthenticationManager,
+                     @Autowired var passwordEncoder: PasswordEncoder,
+                     @Autowired var tokenProvider: JwtTokenProvider) {
 
     @PostMapping("/signin")
-    public fun  authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<JwtAuthenticationResponse> {
+    fun  authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<JwtAuthenticationResponse> {
 
          val authentication = authenticationManager.authenticate( UsernamePasswordAuthenticationToken(
                         loginRequest.usernameOrEmail,
@@ -45,10 +45,10 @@ public class AuthController(@Autowired var userRepository: UserRepository,
                 )
         )
 
-        SecurityContextHolder.getContext().authentication = authentication;
+        SecurityContextHolder.getContext().authentication = authentication
 
-        val jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(JwtAuthenticationResponse(jwt));
+        val jwt = tokenProvider.generateToken(authentication)
+        return ResponseEntity.ok(JwtAuthenticationResponse(jwt))
     }
 
     @PostMapping("/addUser")
@@ -56,12 +56,12 @@ public class AuthController(@Autowired var userRepository: UserRepository,
         println("inside the function")
         if(signUpRequest.username.let { userRepository.existsByUsername(it) }) {
             return ResponseEntity(ApiResponse(false, "Username is already taken!"),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.BAD_REQUEST)
         }
 
         if(signUpRequest.email.let { userRepository.existsByEmail(it) }!!) {
             return ResponseEntity(ApiResponse(false, "Email Address already in use!"),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.BAD_REQUEST)
         }
 
         // Creating user's account
@@ -73,6 +73,6 @@ public class AuthController(@Autowired var userRepository: UserRepository,
         //result = returned user after saving
         System.out.println("user id getting returned")
 
-        return ResponseEntity.created(location).body(ApiResponse(true, "User registered successfully"));
+        return ResponseEntity.created(location).body(ApiResponse(true, "User registered successfully"))
     }
 }
