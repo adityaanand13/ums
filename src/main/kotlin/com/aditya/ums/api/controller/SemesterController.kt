@@ -1,9 +1,8 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.SectionRequest
+import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.SemesterConverter
-import com.aditya.ums.entity.Semester
 import com.aditya.ums.service.SemesterService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus

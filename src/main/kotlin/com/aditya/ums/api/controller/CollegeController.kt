@@ -1,14 +1,13 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.CollegeRequest
 import com.aditya.ums.api.request.CourseRequest
+import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.CollegeConverter
 import com.aditya.ums.service.CollegeService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -16,7 +15,6 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/college")
 @ResponseBody
-@PreAuthorize("hasRole('ADMIN')")
 class CollegeController(
         @Autowired private val collegeService: CollegeService
 ) {

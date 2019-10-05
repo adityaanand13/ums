@@ -1,4 +1,4 @@
-package com.aditya.ums.api
+package com.aditya.ums.api.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 

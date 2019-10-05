@@ -1,6 +1,5 @@
 package com.aditya.ums.entity
 
-import org.springframework.security.access.prepost.PreAuthorize
 import javax.persistence.*
 
 

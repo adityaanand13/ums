@@ -1,12 +1,12 @@
 package com.aditya.ums.service
 
-import com.aditya.ums.api.BadRequestException
 import com.aditya.ums.api.payload.SignUpRequest
 import com.aditya.ums.api.request.UserRequest
 import com.aditya.ums.converter.SignUpConverter
 import com.aditya.ums.converter.UserConverter
 import com.aditya.ums.entity.User
 import com.aditya.ums.enums.UserType
+import com.aditya.ums.exception.BadRequestException
 import com.aditya.ums.repository.UserRepository
 import org.springframework.stereotype.Service
 

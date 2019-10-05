@@ -1,7 +1,7 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.BatchRequest
+import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.CourseConverter
 import com.aditya.ums.service.CourseService
 import org.springframework.beans.factory.annotation.Autowired

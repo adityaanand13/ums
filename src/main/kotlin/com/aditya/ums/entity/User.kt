@@ -1,11 +1,8 @@
 package com.aditya.ums.entity
 
 import com.aditya.ums.enums.*
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import java.time.LocalDate
 import javax.persistence.*
-import javax.persistence.CascadeType
-import javax.persistence.OneToOne
 
 @Entity
 @Table(name = "user")

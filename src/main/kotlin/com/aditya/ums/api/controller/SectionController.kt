@@ -1,7 +1,7 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.GroupRequest
+import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.SectionConverter
 import com.aditya.ums.service.SectionService
 import org.springframework.beans.factory.annotation.Autowired
