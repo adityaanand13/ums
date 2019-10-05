@@ -6,77 +6,82 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "user")
-class User (
+class User(
         @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: Int? = null,
+        var id: Int? = null,
 
         @Column(name = "username")
-    var username: String,
+        var username: String,
 
         @Column(name = "password")
-    var password: String,
+        var password: String,
 
         @Column(name = "first_name")
-    var firstName: String,
+        var firstName: String,
 
         @Column(name = "last_name")
-    var lastName: String? = null,
+        var lastName: String? = null,
 
         @Column(name = "email")
-    var email: String,
+        var email: String,
 
         @Column(name = "DOB")
-    var DOB: LocalDate = LocalDate.now(),
+        var DOB: LocalDate = LocalDate.now(),
 
         @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    var gender: Gender = Gender.UNDEFINED,
+        var gender: Gender = Gender.UNDEFINED,
 
         @Column(name = "phone")
-    var phone: String = "",
+        var phone: String = "",
 
         @Enumerated(EnumType.STRING)
     @Column(name = "blood")
-    var blood: Blood = Blood.UNDEFINED,
+        var blood: Blood = Blood.UNDEFINED,
 
         @Enumerated(EnumType.STRING)
     @Column(name = "religion")
-    var religion : Religion = Religion.UNDEFINED,
+        var religion: Religion = Religion.UNDEFINED,
 
         @Enumerated(EnumType.STRING)
     @Column(name = "category")
-    var category : Category = Category.GENERAL,
+        var category: Category = Category.GENERAL,
 
         @Column(name = "aadhar_number")
-    var aadhar: Long= 0L,
+        var aadhar: Long = 0L,
 
         @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    var userType: UserType = UserType.NORMAL,
+        var userType: UserType = UserType.NORMAL,
 
         @Column(name = "address")
-    var address: String = "",
+        var address: String = "",
 
         @Column(name = "city")
-    var city: String = "",
+        var city: String = "",
 
         @Column(name = "state")
-    var state: String = "",
+        var state: String = "",
 
         @Column(name = "pin_code")
-    var pinCode: String = "",
+        var pinCode: String = "",
 
         @Column(name = "country")
-    var country: String = "India",
+        var country: String = "India",
 
         @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
-    var student: Student? = null,
+        var student: Student? = null,
 
         @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
-    var instructor: Instructor? = null,
+        var instructor: Instructor? = null,
 
         @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
-    var principal: Principal? = null
+        var principal: Principal? = null,
+
+        @ManyToMany(fetch = FetchType.EAGER)
+        @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "role_id")])
+        var roles: MutableSet<Role> = mutableSetOf()
+
 )

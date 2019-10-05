@@ -1,7 +1,10 @@
 package com.aditya.ums.api.payload
-import javax.validation.constraints.*
 
-class SignUpRequest(@NotBlank
+import javax.validation.constraints.Email
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Size
+
+data class SignUpRequest(@NotBlank
                     @Size(min = 4, max = 40)
                     var firstName: String,
 
