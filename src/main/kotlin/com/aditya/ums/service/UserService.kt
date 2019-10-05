@@ -8,23 +8,12 @@ import com.aditya.ums.converter.UserConverter
 import com.aditya.ums.entity.User
 import com.aditya.ums.enums.UserType
 import com.aditya.ums.repository.UserRepository
-import com.aditya.ums.security.MyUserPrincipal
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
 class UserService(
         private val userRepository: UserRepository
-) :UserDetailsService {
-
-    override fun loadUserByUsername(username: String?): UserDetails {
-        val user: User = userRepository.findByUsername(username)
-        if (user == null)
-            throw UsernameNotFoundException("User 404")
-        return MyUserPrincipal(user)
-    }
+) {
 
     fun getAll(): List<User> {
         return userRepository.findAll()
