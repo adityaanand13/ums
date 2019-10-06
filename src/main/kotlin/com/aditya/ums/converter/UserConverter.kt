@@ -9,7 +9,7 @@ class UserConverter {
         fun convertToResponse(user: User) : UserResponse {
             return UserResponse(
                 id = user.id,
-                username = user.username,
+                    username = user.username ?: "",
                 firstName = user.firstName,
                 lastName = user.lastName,
                 email = user.email,
