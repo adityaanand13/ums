@@ -14,67 +14,67 @@ open class User(
         var id: Int? = null,
 
         @Column(name = "username")
-        var username: String? = null,
+        open var username: String? = null,
 
         @Column(name = "password")
-        var password: String,
+        open var password: String,
 
         @Column(name = "first_name")
-        var firstName: String,
+        open var firstName: String,
 
         @Column(name = "last_name")
-        var lastName: String? = null,
+        open var lastName: String? = null,
 
         @Column(name = "email")
-        var email: String,
+        open var email: String,
 
         @Column(name = "DOB")
-        var DOB: LocalDate = LocalDate.now(),
+        open var DOB: LocalDate = LocalDate.now(),
 
         @Enumerated(EnumType.STRING)
         @Column(name = "gender")
-        var gender: Gender = Gender.UNDEFINED,
+        open var gender: Gender = Gender.UNDEFINED,
 
         @Column(name = "phone")
-        var phone: String = "",
+        open var phone: String = "",
 
         @Enumerated(EnumType.STRING)
         @Column(name = "blood")
-        var blood: Blood = Blood.UNDEFINED,
+        open var blood: Blood = Blood.UNDEFINED,
 
         @Enumerated(EnumType.STRING)
         @Column(name = "religion")
-        var religion: Religion = Religion.UNDEFINED,
+        open var religion: Religion = Religion.UNDEFINED,
 
         @Enumerated(EnumType.STRING)
         @Column(name = "category")
-        var category: Category = Category.GENERAL,
+        open var category: Category = Category.GENERAL,
 
         @Column(name = "aadhar_number")
-        var aadhar: Long = 0L,
+        open var aadhar: Long = 0L,
 
         @Enumerated(EnumType.STRING)
         @Column(name = "type")
-        var userType: UserType = UserType.NORMAL,
+        open var userType: UserType = UserType.NORMAL,
 
         @Column(name = "address")
-        var address: String = "",
+        open var address: String = "",
 
         @Column(name = "city")
-        var city: String = "",
+        open var city: String = "",
 
         @Column(name = "state")
-        var state: String = "",
+        open var state: String = "",
 
         @Column(name = "pin_code")
-        var pinCode: String = "",
+        open var pinCode: String = "",
 
         @Column(name = "country")
-        var country: String = "India",
+        open var country: String = "India",
 
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "role_id")])
-        var roles: MutableSet<Role> = mutableSetOf()
+        open var roles: MutableSet<Role> = mutableSetOf()
 
 )
 

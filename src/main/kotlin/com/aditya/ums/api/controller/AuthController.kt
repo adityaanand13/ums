@@ -3,11 +3,8 @@ package com.aditya.ums.api.controller
 import com.aditya.ums.api.payload.ApiResponse
 import com.aditya.ums.api.payload.JwtAuthenticationResponse
 import com.aditya.ums.api.payload.LoginRequest
-import com.aditya.ums.api.request.StudentRequest
-import com.aditya.ums.converter.StudentConverter
-import com.aditya.ums.entity.Role
-import com.aditya.ums.enums.RoleName
-import com.aditya.ums.exception.AppException
+import com.aditya.ums.api.request.UserRequest
+import com.aditya.ums.converter.UserConverter
 import com.aditya.ums.repository.RoleRepository
 import com.aditya.ums.repository.StudentRepository
 import com.aditya.ums.repository.UserRepository
@@ -26,9 +23,6 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import javax.validation.Valid
 
-/**
- * Created by rajeevkumarsingh on 02/08/17.
- */
 @RestController
 @RequestMapping("/api/auth")
 class AuthController {
@@ -68,28 +62,28 @@ class AuthController {
     }
 
     @PostMapping("/signup")
-    fun registerUser(@Valid @RequestBody signUpRequest: StudentRequest): ResponseEntity<*> {
-        if (userRepository!!.existsByUsername(signUpRequest.user.username)) {
+    fun registerUser(@Valid @RequestBody signUpRequest: UserRequest): ResponseEntity<*> {
+        if (userRepository!!.existsByUsername(signUpRequest.username)) {
             return ResponseEntity(ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST)
         }
 
-        if (userRepository!!.existsByEmail(signUpRequest.user.email)!!) {
+        if (userRepository!!.existsByEmail(signUpRequest.email)!!) {
             return ResponseEntity(ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST)
         }
 
         // Creating user's account -- STUDENT
-        val user = StudentConverter.convertToEntity(studentRequest = signUpRequest)
+        val user = UserConverter.convertToEntity(userRequest = signUpRequest)
 
         user.password = passwordEncoder!!.encode(user.password)
 
-        val userRole = roleRepository!!.findByName(RoleName.ROLE_USER)
-                .orElseThrow { AppException("User Role not set.") }
+//        val userRole = roleRepository!!.findByName(RoleName.ROLE_USER)
+//                .orElseThrow { AppException("User Role not set.") }
 
-        user.roles = mutableSetOf<Role>(userRole)
+//        user.roles = mutableSetOf<Role>(userRole)
 
-        val result = studentRepository!!.save(user)
+        val result = userRepository!!.save(user)
 
         val location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
