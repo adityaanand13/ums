@@ -20,7 +20,8 @@ class BatchConverter {
             return BatchResponse(
                     id = batch.id,
                     name = batch.name,
-                    description = batch.description
+                    description = batch.description,
+                    semesters = SemesterConverter.convertToResponses(batch.semesters)
             )
         }
     }

@@ -6,6 +6,7 @@ import java.time.LocalDate
 
 class UserResponse (
     var id: Int? = null,
+    var username: String,
     var firstName: String,
     var lastName: String? = null,
     var email: String,

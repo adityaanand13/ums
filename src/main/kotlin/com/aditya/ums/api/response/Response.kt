@@ -1,4 +1,4 @@
-package com.aditya.ums.api
+package com.aditya.ums.api.response
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
@@ -11,8 +11,6 @@ open class Response {
     var statusMessage: String? = null
     var responseHttpHeaders = mutableMapOf<String, String>()
     var contentType = "application/json; charset=utf-8"
-
-    constructor()
 
     fun data(data: Any): Response {
         this.data = data

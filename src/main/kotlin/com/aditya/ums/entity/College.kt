@@ -2,6 +2,7 @@ package com.aditya.ums.entity
 
 import javax.persistence.*
 
+
 @Entity
 @Table(name = "college")
 class College (
@@ -18,6 +19,9 @@ class College (
 
     @Column(name = "address")
     var address: String,
+
+    @Column(name = "code")
+    var code: String,
 
     //one college can have multiple courses
     @OneToMany(

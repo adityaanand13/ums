@@ -1,25 +1,58 @@
 package com.aditya.ums.entity
 
-import javax.persistence.*
+import com.aditya.ums.enums.*
+import java.time.LocalDate
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
 @Entity
 @Table(name = "instructor")
-class Instructor (
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    var id: Int? = null,
+class Instructor(
 
-/*
-    @MapsId tells Hibernate to use the id column of address as both primary key and foreign key.
-    Also, notice that the @Id column of the Address entity no longer uses the @GeneratedValue annotation.
-*/
-    @OneToOne
-    @MapsId
-    var user: User,
+        id: Int = 0,
 
-    @Column(name = "employee_id")
-    var employeeID : Int
+        username: String?,
+
+        password: String,
+
+        firstName: String,
+
+        lastName: String?,
+
+        email: String,
+
+        DOB: LocalDate,
+
+        gender: Gender,
+
+        phone: String,
+
+        blood: Blood,
+
+        religion: Religion,
+
+        category: Category,
+
+        aadhar: Long,
+
+        userType: UserType,
+
+        address: String,
+
+        city: String,
+
+        state: String,
+
+        pinCode: String,
+
+        country: String,
+
+        roles: MutableSet<Role> = mutableSetOf<Role>(),
+
+
+        @Column(name = "employee_id")
+        var employeeID: Int
 
 /*
     refers to instructor property in the course class @ JoinColumn
@@ -37,4 +70,5 @@ class Instructor (
 //        ]
 //    )//        fetch = FetchType.EAGER,
 //    var courses: MutableList<Course>? = null
-)
+) : User(id, username, password, firstName, lastName, email, DOB, gender, phone, blood, religion, category, aadhar, userType, address, city, state, pinCode, country, roles)
+

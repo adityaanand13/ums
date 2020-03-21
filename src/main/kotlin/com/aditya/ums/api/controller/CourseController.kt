@@ -1,8 +1,7 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.BatchRequest
-import com.aditya.ums.api.request.CourseRequest
+import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.CourseConverter
 import com.aditya.ums.service.CourseService
 import org.springframework.beans.factory.annotation.Autowired
@@ -42,15 +41,15 @@ class CourseController(
                 .statusMessage("Success")
         return ResponseEntity(collegeResponse,HttpStatus.OK)
     }
-//    @GetMapping("/getAll-CollegeWise")
-//    fun getByCollege(@Valid @RequestBody courseRequest: CourseRequest):ResponseEntity<Response>{
-//        val courses = courseService.getAllByCollegeId(courseRequest.college.id)
-//        val coursesResponse = Response()
-//                .success(true)
-//                .data(courses)
-//                .contentType("/application/json")
-//                .httpStatusCode(HttpStatus.OK.value())
-//                .statusMessage("success")
-//        return ResponseEntity(coursesResponse,HttpStatus.OK)
-//    }
+
+    @GetMapping("/{courseId}")
+    fun getById(@PathVariable("courseId", required = true) courseId:Int): ResponseEntity<Response> {
+        val course = CourseConverter.convertToResponse(courseService.getById(courseId))
+        val courseResponse = Response()
+                .success(true)
+                .data(course)
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(courseResponse, HttpStatus.OK)
+    }
 }

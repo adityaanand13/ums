@@ -1,7 +1,7 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.Response
 import com.aditya.ums.api.request.SemesterRequest
+import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.BatchConverter
 import com.aditya.ums.service.BatchService
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,12 +28,12 @@ class BatchController(
         return ResponseEntity(batchesResponse, HttpStatus.OK)
     }
 
-    @PostMapping("/{batch_id}/add-semester")
+    @PostMapping("/{batchId}/add-semester")
     fun addSection(
-            @PathVariable("batch_id", required = true) batch_id:Int,
+            @PathVariable("batchId", required = true) batchId:Int,
             @Valid @RequestBody semesterRequest: SemesterRequest
     ): ResponseEntity<Response> {
-        val batch = BatchConverter.convertToResponse(batchService.addSemester(batch_id, semesterRequest))
+        val batch = BatchConverter.convertToResponse(batchService.addSemester(batchId, semesterRequest))
         val semesterResponse = Response()
                 .success(true)
                 .data(batch)
@@ -41,6 +41,17 @@ class BatchController(
                 .httpStatusCode(HttpStatus.OK.value())
                 .statusMessage("Success")
         return ResponseEntity(semesterResponse, HttpStatus.OK)
+    }
+
+    @GetMapping("/{batchId}")
+    fun getById(@PathVariable("batchId", required = true) batchId:Int): ResponseEntity<Response> {
+        val batch = BatchConverter.convertToResponse(batchService.getById(batchId))
+        val batchResponse = Response()
+                .success(true)
+                .data(batch)
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(batchResponse, HttpStatus.OK)
     }
 
 }

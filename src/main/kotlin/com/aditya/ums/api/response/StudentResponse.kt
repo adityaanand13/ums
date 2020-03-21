@@ -16,5 +16,5 @@ class StudentResponse (
         var mothersIncome: Int? = 0,
         var mothersOccupation: String? = null,
         var familyIncome: Int? = null,
-        var userResponse: UserResponse
+        var user: UserResponse
 )

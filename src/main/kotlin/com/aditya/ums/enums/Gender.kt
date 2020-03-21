@@ -3,7 +3,8 @@ package com.aditya.ums.enums
 enum class Gender(gender: String) {
     MALE("male"),
     FEMALE("female"),
-    TRANSGENDER("transgender");
+    TRANSGENDER("transgender"),
+    UNDEFINED("undefined");
 
 
     companion object  {

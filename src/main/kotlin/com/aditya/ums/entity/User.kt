@@ -3,80 +3,78 @@ package com.aditya.ums.entity
 import com.aditya.ums.enums.*
 import java.time.LocalDate
 import javax.persistence.*
-import javax.persistence.CascadeType
-import javax.persistence.OneToOne
 
 @Entity
 @Table(name = "user")
-class User (
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    var id: Int? = null,
+@Inheritance(strategy = InheritanceType.JOINED)
+open class User(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id")
+        var id: Int? = null,
 
-    @Column(name = "first_name")
-    var firstName: String,
+        @Column(name = "username")
+        open var username: String? = null,
 
-    @Column(name = "last_name")
-    var lastName: String? = null,
+        @Column(name = "password")
+        open var password: String,
 
-    @Column(name = "email")
-    var email: String,
+        @Column(name = "first_name")
+        open var firstName: String,
 
-    @Column(name = "DOB")
-    var DOB: LocalDate,
+        @Column(name = "last_name")
+        open var lastName: String? = null,
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
-    var gender: Gender,
+        @Column(name = "email")
+        open var email: String,
 
-    @Column(name = "phone")
-    var phone: String,
+        @Column(name = "DOB")
+        open var DOB: LocalDate = LocalDate.now(),
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "blood")
-    var blood: Blood,
+        @Enumerated(EnumType.STRING)
+        @Column(name = "gender")
+        open var gender: Gender = Gender.UNDEFINED,
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "religion")
-    var religion : Religion,
+        @Column(name = "phone")
+        open var phone: String = "",
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    var category : Category,
+        @Enumerated(EnumType.STRING)
+        @Column(name = "blood")
+        open var blood: Blood = Blood.UNDEFINED,
 
-    @Column(name = "aadhar_number")
-    var aadhar: Long,
+        @Enumerated(EnumType.STRING)
+        @Column(name = "religion")
+        open var religion: Religion = Religion.UNDEFINED,
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type")
-    var userType: UserType,
+        @Enumerated(EnumType.STRING)
+        @Column(name = "category")
+        open var category: Category = Category.GENERAL,
 
-    @Column(name = "password")
-    var password: String,
+        @Column(name = "aadhar_number")
+        open var aadhar: Long = 0L,
 
-    //address
-    @Column(name = "address")
-    var address: String,
+        @Enumerated(EnumType.STRING)
+        @Column(name = "type")
+        open var userType: UserType = UserType.NORMAL,
 
-    @Column(name = "city")
-    var city: String,
+        @Column(name = "address")
+        open var address: String = "",
 
-    @Column(name = "state")
-    var state: String,
+        @Column(name = "city")
+        open var city: String = "",
 
-    @Column(name = "pin_code")
-    var pinCode: String,
+        @Column(name = "state")
+        open var state: String = "",
 
-    @Column(name = "country")
-    var country: String,
+        @Column(name = "pin_code")
+        open var pinCode: String = "",
 
-    @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
-    var student: Student? = null,
+        @Column(name = "country")
+        open var country: String = "India",
 
-    @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
-    var instructor: Instructor? = null,
+        @ManyToMany(fetch = FetchType.EAGER)
+        @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "role_id")])
+        open var roles: MutableSet<Role> = mutableSetOf()
 
-    @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
-    var principal: Principal? = null
 )
+
