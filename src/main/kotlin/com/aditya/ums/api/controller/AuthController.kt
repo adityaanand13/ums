@@ -3,8 +3,8 @@ package com.aditya.ums.api.controller
 import com.aditya.ums.api.payload.ApiResponse
 import com.aditya.ums.api.payload.JwtAuthenticationResponse
 import com.aditya.ums.api.payload.LoginRequest
-import com.aditya.ums.api.request.UserRequest
-import com.aditya.ums.converter.UserConverter
+import com.aditya.ums.api.payload.SignUpRequest
+import com.aditya.ums.converter.SignUpConverter
 import com.aditya.ums.repository.RoleRepository
 import com.aditya.ums.repository.StudentRepository
 import com.aditya.ums.repository.UserRepository
@@ -45,7 +45,7 @@ class AuthController {
     @Autowired
     internal var tokenProvider: JwtTokenProvider? = null
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<*> {
 
         val authentication = authenticationManager!!.authenticate(
@@ -62,7 +62,7 @@ class AuthController {
     }
 
     @PostMapping("/signup")
-    fun registerUser(@Valid @RequestBody signUpRequest: UserRequest): ResponseEntity<*> {
+    fun registerUser(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<*> {
         if (userRepository!!.existsByUsername(signUpRequest.username)) {
             return ResponseEntity(ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST)
@@ -72,16 +72,10 @@ class AuthController {
             return ResponseEntity(ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST)
         }
-
-        // Creating user's account -- STUDENT
-        val user = UserConverter.convertToEntity(userRequest = signUpRequest)
+        // Creating default user's account --
+        val user = SignUpConverter.convertToEntity(signUpRequest = signUpRequest)
 
         user.password = passwordEncoder!!.encode(user.password)
-
-//        val userRole = roleRepository!!.findByName(RoleName.ROLE_USER)
-//                .orElseThrow { AppException("User Role not set.") }
-
-//        user.roles = mutableSetOf<Role>(userRole)
 
         val result = userRepository!!.save(user)
 
