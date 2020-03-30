@@ -35,7 +35,7 @@ class Student(
 
         aadhar: Long,
 
-        userType: UserType,
+        userType: UserType = UserType.STUDENT,
 
         address: String,
 
@@ -47,7 +47,7 @@ class Student(
 
         country: String,
 
-        roles: MutableSet<Role> = mutableSetOf<Role>(),
+        roles: MutableList<Role> = mutableListOf<Role>(),
 
         @Column(name = "roll_no")
         var rollNo: Int,

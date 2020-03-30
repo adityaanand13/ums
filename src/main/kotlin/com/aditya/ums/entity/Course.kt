@@ -16,6 +16,9 @@ class Course (
     @Column(name = "description")
     var description: String,
 
+    @Column(name = "code")
+    var code: String,
+
     @Column(name = "duration")
     var duration: Int,
 

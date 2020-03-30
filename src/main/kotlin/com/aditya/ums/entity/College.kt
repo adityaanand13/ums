@@ -40,6 +40,4 @@ class College (
         ]
     )
     var principal: Principal?=null
-
-    //TODO : Refactor -> add College Code and do so for all other Departmental Course
 )

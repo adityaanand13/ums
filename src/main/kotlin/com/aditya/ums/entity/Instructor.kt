@@ -4,10 +4,12 @@ import com.aditya.ums.enums.*
 import java.time.LocalDate
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.PrimaryKeyJoinColumn
 import javax.persistence.Table
 
 @Entity
 @Table(name = "instructor")
+@PrimaryKeyJoinColumn(name = "ID")
 class Instructor(
 
         id: Int = 0,
@@ -36,7 +38,7 @@ class Instructor(
 
         aadhar: Long,
 
-        userType: UserType,
+        userType: UserType = UserType.INSTRUCTOR,
 
         address: String,
 
@@ -48,7 +50,7 @@ class Instructor(
 
         country: String,
 
-        roles: MutableSet<Role> = mutableSetOf<Role>(),
+        roles: MutableList<Role> = mutableListOf<Role>(),
 
 
         @Column(name = "employee_id")

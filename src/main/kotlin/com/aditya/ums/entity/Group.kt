@@ -34,5 +34,5 @@ class Group (
         joinColumns= [JoinColumn(name = "group_id")],
         inverseJoinColumns  = [JoinColumn(name = "student_id")]
     )
-    var students: MutableList<Student> = arrayListOf()
+    var students: MutableList<Student> = mutableListOf()
 )

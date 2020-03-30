@@ -1,6 +1,7 @@
 package com.aditya.ums.entity
 
 import com.aditya.ums.enums.*
+import org.hibernate.annotations.NaturalId
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -72,9 +73,16 @@ open class User(
         @Column(name = "country")
         open var country: String = "India",
 
-        @ManyToMany(fetch = FetchType.EAGER)
-        @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "role_id")])
-        open var roles: MutableSet<Role> = mutableSetOf()
+        //todo add created at, created by, modified at, modified by
+
+        //one users can have many roles
+        @ManyToMany(cascade = [CascadeType.MERGE], fetch = FetchType.EAGER)
+        @JoinTable(
+                name = "user_roles",
+                joinColumns = [JoinColumn(name = "user_id")],
+                inverseJoinColumns = [JoinColumn(name = "role_id")]
+        )
+        open var roles: MutableList<Role> = mutableListOf()
 
 )
 

@@ -46,7 +46,7 @@ class Principal(
 
         country: String,
 
-        roles: MutableSet<Role> = mutableSetOf<Role>(),
+        roles: MutableList<Role> = mutableListOf<Role>(),
 
         @Column(name = "employee_id")
         var employeeID: Int,
