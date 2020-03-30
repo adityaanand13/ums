@@ -2,11 +2,8 @@ package com.aditya.ums.service
 
 import com.aditya.ums.api.request.StudentRequest
 import com.aditya.ums.converter.StudentConverter
-import com.aditya.ums.entity.Role
 import com.aditya.ums.entity.Student
-import com.aditya.ums.enums.RoleName
 import com.aditya.ums.enums.UserType
-import com.aditya.ums.exception.AppException
 import com.aditya.ums.exception.BadRequestException
 import com.aditya.ums.repository.RoleRepository
 import com.aditya.ums.repository.StudentRepository
@@ -33,7 +30,7 @@ class StudentService(
             throw BadRequestException("Username is already taken!")
         }
 
-        if (userRepository.existsByEmail(studentRequest.user.email)!!) {
+        if (userRepository.existsByEmail(studentRequest.user.email)) {
             throw BadRequestException("Email Address already in use!")
         }
 
@@ -42,10 +39,11 @@ class StudentService(
 
         user.password = passwordEncoder.encode(user.password)
 
-        val userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                .orElseThrow { AppException("User Role not set.") }
+//        val userRole = roleRepository.findByName("ROLE_USER")
 
-        user.roles = mutableSetOf<Role>(userRole)
+//        if (userRole != null) {
+//            user.roles.add(userRole)
+//        }
 
         val result = studentRepository.save(user)
 
