@@ -1,11 +1,17 @@
 package com.aditya.ums.converter
 
 import com.aditya.ums.api.request.UserRequest
+import com.aditya.ums.api.response.CollegeResponse
 import com.aditya.ums.api.response.UserResponse
+import com.aditya.ums.entity.College
 import com.aditya.ums.entity.User
 
 class UserConverter {
     companion object {
+        fun convertToResponses(users: List<User>): List<UserResponse>{
+            return users.map { user -> UserConverter.convertToResponse(user) }
+        }
+
         fun convertToResponse(user: User) : UserResponse {
             return UserResponse(
                 id = user.id,
@@ -43,7 +49,6 @@ class UserConverter {
                 religion = userRequest.religion,
                 category = userRequest.category,
                 aadhar = userRequest.aadhar,
-                userType = userRequest.userType,
                 address = userRequest.address,
                 city = userRequest.city,
                 state = userRequest.state,

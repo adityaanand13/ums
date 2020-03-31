@@ -52,7 +52,6 @@ class InstructorConverter {
                     religion = user.religion,
                     category = user.category,
                     aadhar = user.aadhar,
-                    userType = user.userType,
                     address = user.address,
                     city = user.city,
                     state = user.state,

@@ -15,6 +15,7 @@ class CourseConverter {
             return CourseResponse(
                     id = course.id,
                     name = course.name,
+                    code = course.code,
                     description = course.description,
                     duration = course.duration,
                     batches = BatchConverter.convertToResponses(course.batches)
@@ -25,6 +26,7 @@ class CourseConverter {
             return Course(
                     id = courseRequest.id,
                     name = courseRequest.name,
+                    code = courseRequest.code,
                     description = courseRequest.description,
                     duration = courseRequest.duration
             )

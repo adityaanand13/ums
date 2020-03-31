@@ -1,6 +1,6 @@
 package com.aditya.ums.converter
 
-import com.aditya.ums.api.payload.SignUpRequest
+import com.aditya.ums.api.request.SignUpRequest
 import com.aditya.ums.entity.User
 
 class SignUpConverter {
@@ -9,8 +9,8 @@ class SignUpConverter {
             return User(
                     username = signUpRequest.username,
                     password = signUpRequest.password,
-                    firstName = signUpRequest.firstName,
-                    lastName = signUpRequest.lastName,
+                    firstName = signUpRequest.firstname,
+                    lastName = signUpRequest.lastname,
                     email = signUpRequest.email,
                     DOB = signUpRequest.DOB,
                     gender = signUpRequest.gender,
