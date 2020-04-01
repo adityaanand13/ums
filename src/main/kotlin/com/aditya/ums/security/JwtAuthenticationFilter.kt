@@ -1,5 +1,8 @@
 package com.aditya.ums.security
 
+import com.aditya.ums.exception.InternalServerError
+import com.aditya.ums.exception.ResourceNotFoundException
+import io.jsonwebtoken.SignatureException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -31,11 +34,11 @@ class JwtAuthenticationFilter : OncePerRequestFilter() {
                     That would avoid the following database hit. It's completely up to you.
                  */
                 val userDetails = customUserDetailsService!!.loadUserById(userId)
-                val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails!!.authorities)
+                val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
                 authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
                 SecurityContextHolder.getContext().authentication = authentication
             }
-        } catch (ex: Exception) {
+        } catch (ex: SignatureException) {
             Companion.logger.error("Could not set user authentication in security context", ex)
         }
         filterChain.doFilter(request, response)

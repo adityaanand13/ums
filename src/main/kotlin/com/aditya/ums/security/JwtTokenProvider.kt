@@ -19,19 +19,19 @@ class JwtTokenProvider {
         val now = Date()
         val expiryDate = Date(now.time + jwtExpirationInMs)
         return Jwts.builder()
-                .setSubject(java.lang.Long.toString(userPrincipal.id.toLong()))
+                .setSubject(userPrincipal.id.toString())
                 .setIssuedAt(Date())
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact()
     }
 
-    fun getUserIdFromJWT(token: String?): Long {
+    fun getUserIdFromJWT(token: String?): Int {
         val claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
                 .body
-        return claims.subject.toLong()
+        return claims.subject.toInt()
     }
 
     fun validateToken(authToken: String?): Boolean {
