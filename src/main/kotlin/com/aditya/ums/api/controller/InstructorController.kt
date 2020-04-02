@@ -7,6 +7,7 @@ import com.aditya.ums.service.InstructorService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -17,7 +18,7 @@ class InstructorController(
         @Autowired private val instructorService: InstructorService
 ) {
     @GetMapping("/")
-    fun getStudents(): ResponseEntity<Response> {
+    fun getInstructors(): ResponseEntity<Response> {
         val instructor = instructorService.getAll()
         val instructorsResponse = Response()
                 .success(true)
@@ -28,7 +29,8 @@ class InstructorController(
     }
 
     @PostMapping("/")
-    fun postStudent(@Valid @RequestBody instructorRequest: InstructorRequest) : ResponseEntity<Response> {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    fun addNewInstructor(@Valid @RequestBody instructorRequest: InstructorRequest) : ResponseEntity<Response> {
         val instructor = instructorService.create(instructorRequest)
         val instructorResponse = Response()
                 .success(true)
