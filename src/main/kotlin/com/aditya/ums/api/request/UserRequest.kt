@@ -25,7 +25,6 @@ class UserRequest (
         val religion: Religion,
         val category: Category,
         val aadhar: Long,
-        val userType: UserType,
         val address: String,
         val city: String,
         val state: String,
