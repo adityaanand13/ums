@@ -1,54 +1,44 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.payload.ApiResponse
 import com.aditya.ums.api.payload.JwtAuthenticationResponse
 import com.aditya.ums.api.payload.LoginRequest
-import com.aditya.ums.api.payload.SignUpRequest
+import com.aditya.ums.api.request.SignUpRequest
+import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.SignUpConverter
 import com.aditya.ums.repository.RoleRepository
 import com.aditya.ums.repository.StudentRepository
 import com.aditya.ums.repository.UserRepository
 import com.aditya.ums.security.JwtTokenProvider
+import com.aditya.ums.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import javax.validation.Valid
+
 
 @RestController
 @RequestMapping("/api/auth")
-class AuthController {
-
-    @Autowired
-    internal var authenticationManager: AuthenticationManager? = null
-
-    @Autowired
-    internal var userRepository: UserRepository? = null
-
-    @Autowired
-    internal var studentRepository: StudentRepository? = null
-
-    @Autowired
-    internal var roleRepository: RoleRepository? = null
-
-    @Autowired
-    internal var passwordEncoder: PasswordEncoder? = null
-
-    @Autowired
-    internal var tokenProvider: JwtTokenProvider? = null
+class AuthController(
+        @Autowired private var authenticationManager: AuthenticationManager,
+        @Autowired private var userService: UserService,
+        @Autowired private var userRepository: UserRepository,
+        @Autowired private var studentRepository: StudentRepository,
+        @Autowired private var roleRepository: RoleRepository,
+        @Autowired private var tokenProvider: JwtTokenProvider
+) {
 
     @PostMapping("/login")
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<*> {
 
-        val authentication = authenticationManager!!.authenticate(
+        val authentication = authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
                         loginRequest.usernameOrEmail,
                         loginRequest.password
@@ -57,32 +47,39 @@ class AuthController {
 
         SecurityContextHolder.getContext().authentication = authentication
 
-        val jwt = tokenProvider!!.generateToken(authentication)
+        val jwt = tokenProvider.generateToken(authentication)
         return ResponseEntity.ok<Any>(JwtAuthenticationResponse(jwt))
     }
 
     @PostMapping("/signup")
-    fun registerUser(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<*> {
-        if (userRepository!!.existsByUsername(signUpRequest.username)) {
-            return ResponseEntity(ApiResponse(false, "Username is already taken!"),
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    fun registerUser(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<Response> {
+        if (userRepository.existsByUsername(signUpRequest.username)) {
+            return ResponseEntity(Response()
+                    .success(false)
+                    .data(signUpRequest.username)
+                    .statusMessage("Username Already In use")
+                    .httpStatusCode(HttpStatus.BAD_REQUEST.value()),
                     HttpStatus.BAD_REQUEST)
         }
 
-        if (userRepository!!.existsByEmail(signUpRequest.email)!!) {
-            return ResponseEntity(ApiResponse(false, "Email Address already in use!"),
+        if (userRepository.existsByEmail(signUpRequest.email)) {
+            return ResponseEntity(Response()
+                    .success(false)
+                    .data(signUpRequest.email)
+                    .statusMessage("Email Already In use")
+                    .httpStatusCode(HttpStatus.BAD_REQUEST.value()),
                     HttpStatus.BAD_REQUEST)
         }
         // Creating default user's account --
         val user = SignUpConverter.convertToEntity(signUpRequest = signUpRequest)
 
-        user.password = passwordEncoder!!.encode(user.password)
+        val result = userService.createUser(signUpRequest)
 
-        val result = userRepository!!.save(user)
-
-        val location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/users/{username}")
-                .buildAndExpand(result.username).toUri()
-
-        return ResponseEntity.created(location).body<Any>(ApiResponse(true, "User registered successfully"))
+        val response = Response()
+                .success(true)
+                .httpStatusCode(HttpStatus.OK.value())
+                .statusMessage("User registered successfully")
+        return ResponseEntity(response, HttpStatus.OK)
     }
 }
