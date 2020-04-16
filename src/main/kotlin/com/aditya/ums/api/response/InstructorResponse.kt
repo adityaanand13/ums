@@ -1,6 +1,6 @@
 package com.aditya.ums.api.response
 
+//todo refactor instructor response
 class InstructorResponse (
-        val employeeID: Int,
         val user: UserResponse
 )

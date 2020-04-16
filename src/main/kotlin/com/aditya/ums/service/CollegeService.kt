@@ -24,6 +24,7 @@ class CollegeService (
 
     fun update(collegeRequest: CollegeRequest): College{
         val college = getById(collegeRequest.id)
+        //todo refactor null
         college.name = collegeRequest.name
         college.code = collegeRequest.code
         college.address = collegeRequest.address

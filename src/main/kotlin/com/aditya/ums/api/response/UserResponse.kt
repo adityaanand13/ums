@@ -21,6 +21,6 @@ class UserResponse (
     var address: String,
     var city: String,
     var state: String,
-    var pinCode: String,
+    var pinCode: Int,
     var country: String
 )

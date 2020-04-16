@@ -23,7 +23,7 @@ class AdminController(
 
     //college controller authorised in college
     @PostMapping("/addMultipleUsers")
-    open fun uploadFile(@RequestParam("file") file: MultipartFile): ResponseEntity<Response> {
+    fun uploadStudentFile(@RequestParam("file") file: MultipartFile): ResponseEntity<Response> {
 
         if (file.isEmpty){
             val response = Response()
@@ -33,14 +33,6 @@ class AdminController(
                     .errors("File Cannot be empty")
             return ResponseEntity(response, HttpStatus.BAD_REQUEST)
         }else{
-//            if (file.contentType!="/application/csv"){
-//                val response = Response()
-//                        .success(false)
-//                        .contentType("application/json")
-//                        .httpStatusCode(HttpStatus.BAD_REQUEST.value())
-//                        .errors("Only CSV files")
-//                return ResponseEntity(response, HttpStatus.BAD_REQUEST)
-//            }
             val data = userService.createUserByCsv(file)
             val response = Response()
                     .success(true)

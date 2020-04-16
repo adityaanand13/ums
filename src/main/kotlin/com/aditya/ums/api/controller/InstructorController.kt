@@ -30,8 +30,9 @@ class InstructorController(
 
     @PostMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun addNewInstructor(@Valid @RequestBody instructorRequest: InstructorRequest) : ResponseEntity<Response> {
-        val instructor = instructorService.create(instructorRequest)
+    fun postInstructor(@Valid @RequestBody instructorRequest: InstructorRequest) : ResponseEntity<Response> {
+        println(instructorRequest.username)
+        val instructor = instructorService.createInstructor(instructorRequest)
         val instructorResponse = Response()
                 .success(true)
                 .data(InstructorConverter.convertToResponse(instructor))

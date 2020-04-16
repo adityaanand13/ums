@@ -10,7 +10,6 @@ import com.aditya.ums.converter.SignUpConverter
 import com.aditya.ums.converter.UserConverter
 import com.aditya.ums.entity.Role
 import com.aditya.ums.entity.User
-import com.aditya.ums.enums.Gender
 import com.aditya.ums.enums.RoleType
 import com.aditya.ums.enums.UserType
 import com.aditya.ums.exception.BadRequestException
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
-import java.util.*
 
 @Service
 class UserService(
@@ -72,9 +70,9 @@ class UserService(
             }
             //when passed all validation
             if(success){
-                val user: User = CsvConverter.convertToEntity(request)
+                val user: User = CsvConverter.convertToUserEntity(request)
                 user.password = passwordEncoder.encode(user.username+user.firstName)
-                user.roles.add(roleRepository.findByName(RoleType.ROLE_STUDENT))
+                user.roles.add(roleRepository.findByName(RoleType.ROLE_USER))
                 userRepository.save(user)
                 val response: CsvUserResponse = CsvConverter.convertToResponse(request)
                 responses.add(CsvCreateResponse(success, response, emptyList()))
@@ -89,8 +87,8 @@ class UserService(
     //create user with limited details
     fun createUser(signUpRequest: SignUpRequest) : User{
         // todo validation
-        signUpRequest.password = passwordEncoder.encode(signUpRequest.password)
         val user = SignUpConverter.convertToEntity(signUpRequest)
+        user.password = passwordEncoder.encode(user.password)
         user.roles.add(roleRepository.findByName(RoleType.ROLE_USER))
         return userRepository.save(user)
     }
@@ -99,6 +97,7 @@ class UserService(
     fun createUser(userRequest: UserRequest) : User{
         //todo add  validation is done or not
         val user = UserConverter.convertToEntity(userRequest)
+        user.password = passwordEncoder.encode(user.password)
         user.roles.add(roleRepository.findByName(RoleType.ROLE_USER))
         return userRepository.save(user)
     }

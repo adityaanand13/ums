@@ -1,7 +1,6 @@
 package com.aditya.ums.entity
 
 import com.aditya.ums.enums.*
-import org.hibernate.annotations.NaturalId
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -68,7 +67,7 @@ open class User(
         open var state: String = "",
 
         @Column(name = "pin_code")
-        open var pinCode: String = "",
+        open var pinCode: Int = 0,
 
         @Column(name = "country")
         open var country: String = "India",

@@ -5,6 +5,8 @@ import com.aditya.ums.api.request.CourseRequest
 import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.CollegeConverter
 import com.aditya.ums.service.CollegeService
+import com.aditya.ums.service.InstructorService
+import com.aditya.ums.service.PrincipalService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,7 +19,9 @@ import javax.validation.Valid
 @RequestMapping("/api/college")
 @ResponseBody
 class CollegeController(
-        @Autowired private val collegeService: CollegeService
+        @Autowired private val collegeService: CollegeService,
+        @Autowired private val instructorService: InstructorService,
+        @Autowired private val principalService: PrincipalService
 ) {
     @GetMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -61,16 +65,20 @@ class CollegeController(
         return ResponseEntity(collegeResponse,HttpStatus.OK)
     }
 
-    @PostMapping("/{college_id}/add-principal")
+    @PostMapping("/{college_id}/add-principal/{instructor_username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun addPrincipal(
             @PathVariable("college_id", required = true) college_id:Int,
-            @Valid @RequestBody courseRequest: CourseRequest
+            @PathVariable("instructor_username", required = true) instructor_username: String
     ): ResponseEntity<Response>{
-        val college = CollegeConverter.convertToResponse(collegeService.addCourse(college_id, courseRequest))
+        //todo college, instructor not found exception
+        //todo refactor principal response
+        val college = collegeService.getById(college_id)
+        val instructor = instructorService.getByUsername(username = instructor_username)
+        val principal = principalService.create(instructor,college)
         val collegeResponse = Response()
                 .success(true)
-                .data(college)
+                .data(principal)
                 .contentType("/application/json")
                 .httpStatusCode(HttpStatus.OK.value())
                 .statusMessage("Success")

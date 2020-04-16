@@ -25,19 +25,21 @@ class College (
 
     //one college can have multiple courses
     @OneToMany(
-        mappedBy = "college",
-        cascade = [CascadeType.ALL]
-    )//        fetch = FetchType.EAGER,
+            mappedBy = "college",
+            cascade = [CascadeType.ALL],
+            fetch = FetchType.LAZY
+    )
     var courses: MutableList<Course> = arrayListOf(),
 
     @OneToOne(
-        mappedBy = "college",
-        cascade = [
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-        ]
+            mappedBy = "college",
+            cascade = [
+                CascadeType.DETACH,
+                CascadeType.MERGE,
+                CascadeType.PERSIST,
+                CascadeType.REFRESH
+            ],
+            fetch = FetchType.LAZY
     )
     var principal: Principal?=null
 )

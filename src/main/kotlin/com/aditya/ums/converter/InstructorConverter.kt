@@ -13,7 +13,6 @@ class InstructorConverter {
 
         fun convertToResponse(instructor: Instructor): InstructorResponse {
             return InstructorResponse(
-                    employeeID = instructor.employeeID,
                     user = UserResponse(
                             id = instructor.id,
                             username = instructor.username ?: "",
@@ -38,26 +37,24 @@ class InstructorConverter {
         }
 
         fun convertToEntity(instructorRequest: InstructorRequest): Instructor {
-            val user = instructorRequest.user
             return Instructor(
-                    username = user.username,
-                    firstName = user.firstName,
-                    lastName = user.lastName,
-                    email = user.email,
-                    password = user.password,
-                    DOB = user.DOB,
-                    gender = user.gender,
-                    phone = user.phone,
-                    blood = user.blood,
-                    religion = user.religion,
-                    category = user.category,
-                    aadhar = user.aadhar,
-                    address = user.address,
-                    city = user.city,
-                    state = user.state,
-                    pinCode = user.pinCode,
-                    country = user.country,
-                    employeeID = instructorRequest.employeeID
+                    username = instructorRequest.username,
+                    firstName = instructorRequest.firstName,
+                    lastName = instructorRequest.lastName,
+                    email = instructorRequest.email,
+                    password = instructorRequest.password,
+                    DOB = instructorRequest.DOB,
+                    gender = instructorRequest.gender,
+                    phone = instructorRequest.phone,
+                    blood = instructorRequest.blood,
+                    religion = instructorRequest.religion,
+                    category = instructorRequest.category,
+                    aadhar = instructorRequest.aadhar,
+                    address = instructorRequest.address,
+                    city = instructorRequest.city,
+                    state = instructorRequest.state,
+                    pinCode = instructorRequest.pinCode,
+                    country = instructorRequest.country
             )
         }
     }

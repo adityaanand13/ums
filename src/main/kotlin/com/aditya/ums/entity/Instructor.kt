@@ -36,7 +36,7 @@ class Instructor(
 
         category: Category,
 
-        aadhar: Long,
+        aadhar: Long = 0,
 
         userType: UserType = UserType.INSTRUCTOR,
 
@@ -46,15 +46,12 @@ class Instructor(
 
         state: String,
 
-        pinCode: String,
+        pinCode: Int,
 
         country: String,
 
-        roles: MutableList<Role> = mutableListOf<Role>(),
+        roles: MutableList<Role> = mutableListOf<Role>()
 
-
-        @Column(name = "employee_id")
-        var employeeID: Int
 
 /*
     refers to instructor property in the course class @ JoinColumn
@@ -72,5 +69,26 @@ class Instructor(
 //        ]
 //    )//        fetch = FetchType.EAGER,
 //    var courses: MutableList<Course>? = null
-) : User(id, username, password, firstName, lastName, email, DOB, gender, phone, blood, religion, category, aadhar, userType, address, city, state, pinCode, country, roles)
+) : User(
+        id = id,
+        username = username,
+        password = password,
+        firstName = firstName,
+        lastName = lastName,
+        email = email,
+        DOB = DOB,
+        gender = gender,
+        phone = phone,
+        blood = blood,
+        religion = religion,
+        category = category,
+        aadhar = aadhar,
+        userType = userType,
+        address = address,
+        city = city,
+        state = state,
+        pinCode = pinCode,
+        country = country,
+        roles = roles
+)
 

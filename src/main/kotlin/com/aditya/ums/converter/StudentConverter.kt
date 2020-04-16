@@ -13,7 +13,6 @@ class StudentConverter {
 
         fun convertToResponse(student: Student): StudentResponse {
             return StudentResponse(
-                    rollNo = student.rollNo,
                     localAddress = student.localAddress,
                     nationality = student.nationality,
                     fathersName = student.fathersName,
@@ -67,7 +66,6 @@ class StudentConverter {
                     state = user.state,
                     pinCode = user.pinCode,
                     country = user.country,
-                    rollNo = studentRequest.rollNo,
                     localAddress = studentRequest.localAddress,
                     nationality = studentRequest.nationality,
                     fathersName = studentRequest.fathersName,

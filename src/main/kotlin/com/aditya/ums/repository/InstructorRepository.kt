@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface InstructorRepository : JpaRepository<Instructor, Int> {
     fun findFirstByFirstNameAndUserType(firstName: String, userType: UserType): Instructor
-    fun findFirstByEmployeeID(employeeID: Int): Instructor
+    fun findByUsername(username: String): Instructor
+//    fun findFirstByEmployeeID(employeeID: Int): Instructor
 }

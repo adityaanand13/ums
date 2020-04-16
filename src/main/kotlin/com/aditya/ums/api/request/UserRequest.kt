@@ -4,31 +4,32 @@ import com.aditya.ums.enums.*
 import java.time.LocalDate
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.PositiveOrZero
 
-class UserRequest (
-        val id: Int?,
-        @NotBlank
+open class UserRequest (
+    val id: Int?,
+    @NotBlank
     val username: String,
-
-        @NotBlank
+    @NotBlank
     val firstName: String,
-
-        @NotBlank
+    @NotBlank
     @Email
     val email: String,
-
-        val lastName: String? = null,
-        val DOB: LocalDate,
-        val gender: Gender,
-        val phone: String,
-        val blood: Blood,
-        val religion: Religion,
-        val category: Category,
-        val aadhar: Long,
-        val address: String,
-        val city: String,
-        val state: String,
-        val pinCode: String,
-        val country: String,
-        val password: String
+    @NotBlank
+    val lastName: String,
+    val DOB: LocalDate,
+    val gender: Gender,
+    val phone: String,
+    val blood: Blood,
+    val religion: Religion,
+    val category: Category,
+    @PositiveOrZero
+    val aadhar: Long = 0L,
+    val address: String,
+    val city: String,
+    val state: String,
+    @PositiveOrZero
+    val pinCode: Int = 0,
+    val country: String,
+    val password: String
 )

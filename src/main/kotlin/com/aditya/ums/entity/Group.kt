@@ -22,7 +22,8 @@ class Group (
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
                     CascadeType.REFRESH
-                ]
+                ],
+                fetch = FetchType.LAZY
         )
         @JoinColumn(name = "section_id")
         var section: Section? = null,

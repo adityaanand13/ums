@@ -3,7 +3,6 @@ package com.aditya.ums.api.response
 import java.time.LocalDate
 
 class StudentResponse (
-        var rollNo : Int = 0,
         var DOB: LocalDate? = null,
         var localAddress: String ? = null,
         var nationality: String ? = null,

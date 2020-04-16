@@ -17,6 +17,9 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest
+import org.springframework.boot.actuate.context.ShutdownEndpoint
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 
 //todo throw not found exception in JPA user
 @Configuration
@@ -38,7 +41,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         authenticationManagerBuilder
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder())
-        //authenticationManagerBuilder.inMemoryAuthentication()
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -52,6 +54,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         return BCryptPasswordEncoder()
     }
 
+    //todo refactor most restrictive to least restrictive
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http
@@ -62,11 +65,11 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                .antMatchers("/",
+                    .authorizeRequests()
+                    .antMatchers("/",
                         "/favicon.ico",
                         "/error",
                         "/**/*.png",
@@ -75,8 +78,12 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/v2/api-docs",
+                        "/webjars/**",
                         "/**/*.js")
-                .permitAll()
+                    .permitAll()
                 .antMatchers("/api/auth/**")
                 .permitAll()
                 //todo add api for username and email availability
@@ -84,7 +91,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .permitAll()
                 .anyRequest()
                 .authenticated()
-        // Add our custom JWT security filter
+
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
     }
 }

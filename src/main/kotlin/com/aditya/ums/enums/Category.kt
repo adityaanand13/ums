@@ -18,7 +18,8 @@ enum class Category (category: String) {
     BCB("Backward caste group B"),
     ST ("Scheduled Tribe"),
     SC ("Scheduled Caste"),
-    OBC ("Other backward caste");
+    OBC ("Other backward caste"),
+    UNDEFINED("UNDEFINED");
 
 
     companion object  {
