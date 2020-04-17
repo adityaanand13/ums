@@ -28,7 +28,7 @@ class ApplicationStartupRunner : CommandLineRunner {
             logger.info("super admin already exist")
         }else{
             try {
-                userService.createSuperUser('aditya123')
+                userService.createSuperUser("aditya123")
 //                // creates a console object
 //                val console: Console? = System.console()
 //
