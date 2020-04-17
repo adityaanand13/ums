@@ -4,5 +4,10 @@
       "name": "app.jwtSecret",
       "type": "java.lang.String",
       "description": "Description for app.jwtSecret."
-  }
-] }
+    },
+    {
+      "name": "management.endpoint.trace.enabled",
+      "type": "java.lang.String",
+      "description": "Description for management.endpoint.trace.enabled."
+    }
+  ] }
