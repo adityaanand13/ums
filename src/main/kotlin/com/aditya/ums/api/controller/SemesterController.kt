@@ -1,6 +1,7 @@
 package com.aditya.ums.api.controller
 
 import com.aditya.ums.api.request.SectionRequest
+import com.aditya.ums.api.request.SubjectRequest
 import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.SemesterConverter
 import com.aditya.ums.service.SemesterService
@@ -16,12 +17,29 @@ import javax.validation.Valid
 class SemesterController (
         @Autowired private val semesterService: SemesterService
 ){
+    //refactor nomenclature
     @PostMapping("/{semesterId}/add-section")
     fun addSection(
             @PathVariable("semesterId", required = true) semesterId:Int,
             @Valid @RequestBody sectionRequest: SectionRequest
     ): ResponseEntity<Response> {
         val semester = SemesterConverter.convertToResponse(semesterService.addSection(semesterId, sectionRequest))
+        val semesterResponse = Response()
+                .success(true)
+                .data(semester)
+                .contentType("/application/json")
+                .httpStatusCode(HttpStatus.OK.value())
+                .statusMessage("Success")
+        return ResponseEntity(semesterResponse, HttpStatus.OK)
+    }
+
+    //refactor subject code
+    @PostMapping("/{semesterId}/add-subject")
+    fun addSubject(
+            @PathVariable("semesterId", required = true) semesterId:Int,
+            @Valid @RequestBody subjectRequest: SubjectRequest
+    ): ResponseEntity<Response> {
+        val semester = SemesterConverter.convertToResponse(semesterService.addSubject(semesterId, subjectRequest))
         val semesterResponse = Response()
                 .success(true)
                 .data(semester)

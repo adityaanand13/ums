@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service
 class GroupService(
         private val groupRepository: GroupRepository
 ) {
-    fun create(groupRequest: GroupRequest): Group{
-        return groupRepository.save(GroupConverter.convertToEntity(groupRequest))
+    fun create(name: String): Group {
+        val group: Group = Group(name = name)
+        return groupRepository.save(group)
     }
 }

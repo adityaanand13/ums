@@ -12,15 +12,13 @@ class GroupConverter {
         fun convertToResponse(group: Group): GroupResponse{
             return GroupResponse(
                     id = group.id,
-                    name = group.name,
-                    description = group.description
+                    name = group.name
             )
         }
         fun convertToEntity(groupRequest: GroupRequest): Group{
             return Group(
                     id = groupRequest.id,
-                    name = groupRequest.name,
-                    description = groupRequest.description
+                    name = groupRequest.name
             )
         }
     }

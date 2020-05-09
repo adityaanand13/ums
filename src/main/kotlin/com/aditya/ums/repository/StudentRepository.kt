@@ -1,5 +1,6 @@
 package com.aditya.ums.repository
 
+import com.aditya.ums.entity.Group
 import com.aditya.ums.entity.Student
 import com.aditya.ums.enums.UserType
 import org.springframework.data.jpa.repository.JpaRepository

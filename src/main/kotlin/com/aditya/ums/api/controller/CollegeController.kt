@@ -6,7 +6,6 @@ import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.CollegeConverter
 import com.aditya.ums.service.CollegeService
 import com.aditya.ums.service.InstructorService
-import com.aditya.ums.service.PrincipalService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,8 +19,7 @@ import javax.validation.Valid
 @ResponseBody
 class CollegeController(
         @Autowired private val collegeService: CollegeService,
-        @Autowired private val instructorService: InstructorService,
-        @Autowired private val principalService: PrincipalService
+        @Autowired private val instructorService: InstructorService
 ) {
     @GetMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -55,7 +53,7 @@ class CollegeController(
             @PathVariable("college_id", required = true) college_id:Int,
             @Valid @RequestBody courseRequest: CourseRequest
     ): ResponseEntity<Response>{
-        val college = CollegeConverter.convertToResponse(collegeService.addCourse(college_id, courseRequest))
+        val college = CollegeConverter.convertToDetailedResponse(collegeService.addCourse(college_id, courseRequest))
         val collegeResponse = Response()
                 .success(true)
                 .data(college)
@@ -71,14 +69,11 @@ class CollegeController(
             @PathVariable("college_id", required = true) college_id:Int,
             @PathVariable("instructor_username", required = true) instructor_username: String
     ): ResponseEntity<Response>{
-        //todo college, instructor not found exception
-        //todo refactor principal response
-        val college = collegeService.getById(college_id)
-        val instructor = instructorService.getByUsername(username = instructor_username)
-        val principal = principalService.create(instructor,college)
+        print("hello")
+        val college = collegeService.assignPrincipal(college_id, instructor_username)
         val collegeResponse = Response()
                 .success(true)
-                .data(principal)
+                .data(CollegeConverter.convertToResponse(college))
                 .contentType("/application/json")
                 .httpStatusCode(HttpStatus.OK.value())
                 .statusMessage("Success")
@@ -87,7 +82,7 @@ class CollegeController(
 
     @GetMapping("/{collegeId}")
     fun getCollegeById(@PathVariable("collegeId", required = true) collegeId:Int): ResponseEntity<Response> {
-        val college = CollegeConverter.convertToResponse(collegeService.getById(collegeId))
+        val college = CollegeConverter.convertToDetailedResponse(collegeService.getById(collegeId))
         val collegeResponse = Response()
                 .success(true)
                 .data(college)
@@ -96,14 +91,10 @@ class CollegeController(
         return ResponseEntity(collegeResponse, HttpStatus.OK)
     }
 
-    @PutMapping("/{collegeId}")
+    @PutMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun updateCollege(
-            @PathVariable("collegeId", required = true) collegeId:Int,
-            @Valid @RequestBody collegeRequest: CollegeRequest
-    ): ResponseEntity<Response> {
-        collegeRequest.id = collegeId
-        val college = CollegeConverter.convertToResponse(collegeService.update(collegeRequest))
+    fun updateCollege(@Valid @RequestBody collegeRequest: CollegeRequest): ResponseEntity<Response> {
+        val college = CollegeConverter.convertToDetailedResponse(collegeService.update(collegeRequest))
         val collegeResponse = Response()
                 .success(true)
                 .data(college)

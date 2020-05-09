@@ -13,9 +13,6 @@ class Group (
         @Column(name = "name")
         var name: String,
 
-        @Column(name = "description")
-        var description: String,
-
         @ManyToOne(
                 cascade = [
                     CascadeType.DETACH,

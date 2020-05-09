@@ -5,5 +5,6 @@ class CourseRequest (
     var name: String,
     var code: String,
     var description: String,
-    var duration: Int
+    var duration: Int,
+    var semesterPerYear: Int
 )

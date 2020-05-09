@@ -18,6 +18,7 @@ class CourseConverter {
                     code = course.code,
                     description = course.description,
                     duration = course.duration,
+                    semesterPerYear = course.semesterPerYear,
                     batches = BatchConverter.convertToResponses(course.batches)
             )
         }
@@ -28,7 +29,8 @@ class CourseConverter {
                     name = courseRequest.name,
                     code = courseRequest.code,
                     description = courseRequest.description,
-                    duration = courseRequest.duration
+                    duration = courseRequest.duration,
+                    semesterPerYear = courseRequest.semesterPerYear
             )
         }
     }

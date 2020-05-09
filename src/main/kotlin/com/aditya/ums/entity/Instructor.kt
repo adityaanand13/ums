@@ -9,7 +9,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "instructor")
-@PrimaryKeyJoinColumn(name = "ID")
+@PrimaryKeyJoinColumn(name = "id")
 class Instructor(
 
         id: Int = 0,

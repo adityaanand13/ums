@@ -6,5 +6,6 @@ class CourseResponse(
         var code: String,
         var description: String,
         var duration: Int,
+        var semesterPerYear: Int,
         var batches: List<BatchResponse>
 )

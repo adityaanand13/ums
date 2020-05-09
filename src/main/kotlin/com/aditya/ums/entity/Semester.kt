@@ -5,18 +5,21 @@ import javax.persistence.*
 @Entity
 @Table(name = "semester")
 class Semester(
-    @Id
+        @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     var id: Int? = null,
 
-    @Column(name = "name")
+        @Column(name = "name")
     var name: String,
 
-    @Column(name = "description")
-    var description: String,
+        @Column(name = "seq")
+    var seq: Int,
 
-    @ManyToOne(
+        @Column(name = "isActive")
+    var isActive: Boolean = false,
+
+        @ManyToOne(
         cascade = [
             CascadeType.DETACH,
             CascadeType.MERGE,
@@ -28,19 +31,14 @@ class Semester(
     var batch: Batch? = null,
 
     //one semester can have multiple sections
-    @OneToMany(
+        @OneToMany(
             mappedBy = "semester",
-            cascade = [
-                CascadeType.DETACH,
-                CascadeType.MERGE,
-                CascadeType.PERSIST,
-                CascadeType.REFRESH
-            ]
+            cascade = [CascadeType.ALL]
     )//        fetch = FetchType.EAGER,
     var sections: MutableList<Section> = arrayListOf(),
 
         //one semester can have multiple subjects
-    @OneToMany(
+        @OneToMany(
             mappedBy = "semester",
             cascade = [
                 CascadeType.DETACH,
@@ -49,5 +47,5 @@ class Semester(
                 CascadeType.REFRESH
             ]
     )//        fetch = FetchType.EAGER,
-    var subject: MutableList<Subject> = arrayListOf()
+    var subjects: MutableList<Subject> = arrayListOf()
 )

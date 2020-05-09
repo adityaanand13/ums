@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service
 @Service
 class CollegeService (
         private val collegeRepository: CollegeRepository,
-        private  val courseService: CourseService
+        private  val courseService: CourseService,
+        private  val InstructorService: InstructorService
 ) {
 
     fun getAll(): List<College>{
@@ -28,7 +29,6 @@ class CollegeService (
         college.name = collegeRequest.name
         college.code = collegeRequest.code
         college.address = collegeRequest.address
-        college.description = collegeRequest.description
         return collegeRepository.save(college)
     }
 
@@ -50,6 +50,16 @@ class CollegeService (
             val course: Course = courseService.create(courseRequest)
             course.college=college
             college.courses.add(course)
+            college = collegeRepository.save(college)
+        }
+        return college
+    }
+
+    fun assignPrincipal(collegeID: Int, instructorUsername: String): College{
+        var college = collegeRepository.getOne(collegeID)
+        if(college!= null){
+            val principal = InstructorService.getByUsername(instructorUsername)
+            college.principal = principal
             college = collegeRepository.save(college)
         }
         return college

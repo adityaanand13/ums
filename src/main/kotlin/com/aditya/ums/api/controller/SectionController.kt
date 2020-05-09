@@ -29,10 +29,9 @@ class SectionController(
 
     @PostMapping("/{sectionId}/add-group")
     fun addGroup(
-            @PathVariable("sectionId", required = true) sectionId:Int,
-            @Valid @RequestBody groupRequest: GroupRequest
+            @PathVariable("sectionId", required = true) sectionId:Int
     ): ResponseEntity<Response> {
-        val section = SectionConverter.convertToResponse(sectionService.addGroup(sectionId, groupRequest))
+        val section = SectionConverter.convertToResponse(sectionService.addGroup(sectionId))
         val sectionResponse = Response()
                 .success(true)
                 .data(section)

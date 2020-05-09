@@ -1,10 +1,6 @@
 package com.aditya.ums.service
 
-import com.aditya.ums.api.request.BatchRequest
-import com.aditya.ums.api.request.SemesterRequest
-import com.aditya.ums.converter.BatchConverter
 import com.aditya.ums.entity.Batch
-import com.aditya.ums.entity.Semester
 import com.aditya.ums.repository.BatchRepository
 import org.springframework.stereotype.Service
 
@@ -17,8 +13,9 @@ class BatchService (
         return batchRepository.findAll()
     }
 
-    fun create(batchRequest: BatchRequest): Batch{
-        return batchRepository.save(BatchConverter.convertToEntity(batchRequest))
+    fun create(batchName: String): Batch{
+        val batch: Batch = Batch(name = batchName)
+        return batchRepository.save(batch)
     }
 
     fun getById(id: Int): Batch{
@@ -27,16 +24,5 @@ class BatchService (
 
     fun getAllByCourseId(courseId: Int): List<Batch>{
         return batchRepository.getAllByCourse_Id(courseId)
-    }
-
-    fun addSemester(batchID: Int, semesterRequest: SemesterRequest): Batch{
-        var batch = batchRepository.getOne(batchID)
-        if(batch!= null){
-            val semester: Semester = semesterService.create(semesterRequest)
-            semester.batch=batch
-            batch.semesters.add(semester)
-            batch = batchRepository.save(batch)
-        }
-        return batch
     }
 }

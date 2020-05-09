@@ -13,26 +13,24 @@ class InstructorConverter {
 
         fun convertToResponse(instructor: Instructor): InstructorResponse {
             return InstructorResponse(
-                    user = UserResponse(
-                            id = instructor.id,
-                            username = instructor.username ?: "",
-                            firstName = instructor.firstName,
-                            lastName = instructor.lastName ?: "",
-                            email = instructor.email,
-                            DOB = instructor.DOB,
-                            gender = instructor.gender,
-                            phone = instructor.phone,
-                            blood = instructor.blood,
-                            religion = instructor.religion,
-                            category = instructor.category,
-                            aadhar = instructor.aadhar,
-                            userType = instructor.userType,
-                            address = instructor.address,
-                            city = instructor.city,
-                            state = instructor.state,
-                            pinCode = instructor.pinCode,
-                            country = instructor.country
-                    )
+                    id = instructor.id,
+                    username = instructor.username ?: "",
+                    firstName = instructor.firstName,
+                    lastName = instructor.lastName ?: "",
+                    email = instructor.email,
+                    DOB = instructor.DOB,
+                    gender = instructor.gender,
+                    phone = instructor.phone,
+                    blood = instructor.blood,
+                    religion = instructor.religion,
+                    category = instructor.category,
+                    aadhar = instructor.aadhar,
+                    userType = instructor.userType,
+                    address = instructor.address,
+                    city = instructor.city,
+                    state = instructor.state,
+                    pinCode = instructor.pinCode,
+                    country = instructor.country
             )
         }
 
