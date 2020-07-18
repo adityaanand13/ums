@@ -20,7 +20,7 @@ class InstructorRequest(
         val email: String,
         @NotBlank
         val lastName: String,
-        val DOB: LocalDate,
+        val dob: LocalDate,
         val gender: Gender,
         val phone: String,
         val blood: Blood,

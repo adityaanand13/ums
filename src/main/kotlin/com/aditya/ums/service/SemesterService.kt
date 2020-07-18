@@ -9,22 +9,22 @@ import com.aditya.ums.repository.SemesterRepository
 import org.springframework.stereotype.Service
 
 @Service
-class SemesterService (
+class SemesterService(
         private val semesterRepository: SemesterRepository,
         private val sectionService: SectionService,
         private val subjectService: SubjectService
 ) {
 
-    fun getById(id: Int): Semester{
+    fun getById(id: Int): Semester {
         return semesterRepository.getOne(id)
     }
 
     fun addSection(semesterID: Int, sectionRequest: SectionRequest): Semester {
         var semester = semesterRepository.getOne(semesterID)
-        if(semester!= null){
-            sectionRequest.name = (65+semester.sections.size).toChar().toString()
+        if (semester != null) {
+            sectionRequest.name = (65 + semester.sections.size).toChar().toString()
             val section: Section = sectionService.create(sectionRequest)
-            section.semester=semester
+            section.semester = semester
             semester.sections.add(section)
             semester = semesterRepository.save(semester)
         }
@@ -33,10 +33,19 @@ class SemesterService (
 
     fun addSubject(semesterID: Int, subjectRequest: SubjectRequest): Semester {
         var semester = semesterRepository.getOne(semesterID)
-        if(semester!= null){
+        if (semester != null) {
             val subject: Subject = subjectService.create(subjectRequest)
-            subject.semester=semester
+            subject.semester = semester
             semester.subjects.add(subject)
+            semester = semesterRepository.save(semester)
+        }
+        return semester
+    }
+
+    fun activate(semesterId: Int): Semester {
+        var semester = semesterRepository.getOne(semesterId)
+        if (semester != null) {
+            semester.active = true
             semester = semesterRepository.save(semester)
         }
         return semester

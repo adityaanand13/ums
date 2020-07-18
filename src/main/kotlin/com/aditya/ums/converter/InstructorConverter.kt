@@ -2,7 +2,6 @@ package com.aditya.ums.converter
 
 import com.aditya.ums.api.request.InstructorRequest
 import com.aditya.ums.api.response.InstructorResponse
-import com.aditya.ums.api.response.UserResponse
 import com.aditya.ums.entity.Instructor
 
 class InstructorConverter {
@@ -18,7 +17,7 @@ class InstructorConverter {
                     firstName = instructor.firstName,
                     lastName = instructor.lastName ?: "",
                     email = instructor.email,
-                    DOB = instructor.DOB,
+                    dob = instructor.DOB,
                     gender = instructor.gender,
                     phone = instructor.phone,
                     blood = instructor.blood,
@@ -41,7 +40,7 @@ class InstructorConverter {
                     lastName = instructorRequest.lastName,
                     email = instructorRequest.email,
                     password = instructorRequest.password,
-                    DOB = instructorRequest.DOB,
+                    DOB = instructorRequest.dob,
                     gender = instructorRequest.gender,
                     phone = instructorRequest.phone,
                     blood = instructorRequest.blood,

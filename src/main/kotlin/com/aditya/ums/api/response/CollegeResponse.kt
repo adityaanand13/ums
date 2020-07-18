@@ -7,5 +7,6 @@ class CollegeResponse (
         var address: String,
         var phone: String,
         var email: String,
+        var principal: InstructorResponse? = null,
         var courses: List<CourseResponse>? = null
 )

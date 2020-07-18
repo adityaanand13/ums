@@ -13,7 +13,7 @@ class SemesterConverter {
             return SemesterResponse(
                     id = semester.id,
                     name = semester.name,
-                    isActive = semester.isActive,
+                    active = semester.active,
                     seq = semester.seq,
                     sections = SectionConverter.convertToResponses(semester.sections),
                     subjects = SubjectConverter.convertToResponses(semester.subjects)

@@ -10,7 +10,7 @@ class InstructorResponse (
         var firstName: String,
         var lastName: String? = null,
         var email: String,
-        var DOB: LocalDate,
+        var dob: LocalDate,
         var gender: Gender,
         var phone: String,
         var blood: Blood,

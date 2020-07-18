@@ -33,11 +33,11 @@ class StudentService(
     }
 
     fun create(studentRequest: StudentRequest): Student {
-        if (userRepository.existsByUsername(studentRequest.user.username)) {
+        if (userRepository.existsByUsername(studentRequest.username)) {
             throw BadRequestException("Username is already taken!")
         }
 
-        if (userRepository.existsByEmail(studentRequest.user.email)) {
+        if (userRepository.existsByEmail(studentRequest.email)) {
             throw BadRequestException("Email Address already in use!")
         }
 

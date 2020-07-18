@@ -3,18 +3,10 @@ package com.aditya.ums.api.controller
 import com.aditya.ums.api.payload.JwtAuthenticationResponse
 import com.aditya.ums.api.payload.LoginRequest
 import com.aditya.ums.api.response.Response
-import com.aditya.ums.converter.UserConverter
-
-import com.aditya.ums.repository.RoleRepository
-import com.aditya.ums.repository.StudentRepository
-import com.aditya.ums.repository.UserRepository
 import com.aditya.ums.security.JwtTokenProvider
-import com.aditya.ums.service.UserService
-import io.swagger.annotations.Authorization
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -26,15 +18,11 @@ import javax.validation.Valid
 @RequestMapping("/api/auth")
 class AuthController(
         @Autowired private var authenticationManager: AuthenticationManager,
-        @Autowired private var userService: UserService,
-        @Autowired private var userRepository: UserRepository,
-        @Autowired private var studentRepository: StudentRepository,
-        @Autowired private var roleRepository: RoleRepository,
         @Autowired private var tokenProvider: JwtTokenProvider
 ) {
 
     @PostMapping("/login")
-    fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<*> {
+    fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<Response> {
 
         val authentication = authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
@@ -46,12 +34,19 @@ class AuthController(
         SecurityContextHolder.getContext().authentication = authentication
 
         val jwt = tokenProvider.generateToken(authentication)
-        return ResponseEntity.ok<Any>(JwtAuthenticationResponse(jwt))
+        val response = Response()
+                .success(true)
+                .data(JwtAuthenticationResponse(jwt))
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     @GetMapping("/verify")
     fun verify(): ResponseEntity<Any> {
-        return ResponseEntity(HttpStatus.OK)
+        return ResponseEntity(
+                mapOf("data" to mapOf("valid" to true)),
+                HttpStatus.OK)
     }
 
     //to be moved to admin

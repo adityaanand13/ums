@@ -16,6 +16,9 @@ class Section(
         @Column(name = "description")
         var description: String,
 
+//        @Column(name = "head_mentor")
+//        var headMentor: Int?,
+
         //all sections should associate with a semester
         @ManyToOne(
             cascade = [
@@ -38,5 +41,12 @@ class Section(
                         CascadeType.REFRESH
                 ]
         )//        fetch = FetchType.EAGER,
-        var groups: MutableList<Group> = arrayListOf()
+        var groups: MutableList<Group> = arrayListOf(),
+
+        @OneToOne(fetch = FetchType.LAZY,
+                optional = false,
+                cascade = [CascadeType.ALL],
+                mappedBy = "section"
+        )
+        var sectionHeadMentor: SectionHeadMentor? =null
 )

@@ -1,5 +1,4 @@
 package com.aditya.ums.entity
-
 import javax.persistence.*
 
 
@@ -34,14 +33,11 @@ class College(
         )
         var courses: MutableList<Course> = arrayListOf(),
 
-        @OneToOne(
+
+        @OneToOne(fetch = FetchType.LAZY,
+                optional = false,
                 cascade = [CascadeType.ALL],
-                fetch = FetchType.LAZY
+                mappedBy = "college"
         )
-        @JoinTable(
-                name = "principal",
-                joinColumns = [JoinColumn(name = "college_id", referencedColumnName = "id", unique = true)],
-                inverseJoinColumns = [JoinColumn(name = "instructor_Id", referencedColumnName = "id")]
-        )
-        var principal: Instructor? = null
+        var collegePrincipal: CollegePrincipal? = null
 )

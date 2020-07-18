@@ -1,7 +1,6 @@
 package com.aditya.ums.entity
 
 import com.aditya.ums.enums.RoleType
-import org.hibernate.annotations.NaturalId
 import javax.persistence.*
 
 @Entity

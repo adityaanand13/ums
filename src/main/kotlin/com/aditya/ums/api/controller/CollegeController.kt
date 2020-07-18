@@ -2,8 +2,11 @@ package com.aditya.ums.api.controller
 
 import com.aditya.ums.api.request.CollegeRequest
 import com.aditya.ums.api.request.CourseRequest
+import com.aditya.ums.api.response.PrincipalAssignResponse
 import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.CollegeConverter
+import com.aditya.ums.converter.InstructorConverter
+import com.aditya.ums.entity.College
 import com.aditya.ums.service.CollegeService
 import com.aditya.ums.service.InstructorService
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,7 +26,7 @@ class CollegeController(
 ) {
     @GetMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun getColleges(): ResponseEntity<Response>{
+    fun getColleges(): ResponseEntity<Response> {
         val colleges = CollegeConverter.convertToResponses(collegeService.getAll())
         val collegesResponse = Response()
                 .success(true)
@@ -36,7 +39,7 @@ class CollegeController(
 
     @PostMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun postColleges(@Valid @RequestBody collegeRequest: CollegeRequest): ResponseEntity<Response>{
+    fun postColleges(@Valid @RequestBody collegeRequest: CollegeRequest): ResponseEntity<Response> {
         val college = CollegeConverter.convertToResponse(collegeService.create(collegeRequest))
         val collegeResponse = Response()
                 .success(true)
@@ -50,62 +53,72 @@ class CollegeController(
     @PostMapping("/{college_id}/add-course")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun addCourse(
-            @PathVariable("college_id", required = true) college_id:Int,
+            @PathVariable("college_id", required = true) college_id: Int,
             @Valid @RequestBody courseRequest: CourseRequest
-    ): ResponseEntity<Response>{
-        val college = CollegeConverter.convertToDetailedResponse(collegeService.addCourse(college_id, courseRequest))
-        val collegeResponse = Response()
+    ): ResponseEntity<Response> {
+        val college = collegeService.addCourse(college_id, courseRequest)
+        val principal = college.collegePrincipal?.principal?.let { instructorService.getById(it) }
+        val collegeResponse = CollegeConverter.convertToDetailedResponse(college = college, principal = principal)
+        val response = Response()
                 .success(true)
-                .data(college)
+                .data(collegeResponse)
                 .contentType("/application/json")
                 .httpStatusCode(HttpStatus.OK.value())
                 .statusMessage("Success")
-        return ResponseEntity(collegeResponse,HttpStatus.OK)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
-    @PostMapping("/{college_id}/add-principal/{instructor_username}")
+    @PostMapping("/{college_id}/add-principal/{instructor_id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun addPrincipal(
-            @PathVariable("college_id", required = true) college_id:Int,
-            @PathVariable("instructor_username", required = true) instructor_username: String
-    ): ResponseEntity<Response>{
-        print("hello")
-        val college = collegeService.assignPrincipal(college_id, instructor_username)
+            @PathVariable("college_id", required = true) college_id: Int,
+            @PathVariable("instructor_id", required = true) instructor_id: Int
+    ): ResponseEntity<Response> {
+        val college: College = collegeService.assignPrincipal(college_id, instructor_id)
+        val principal = college.collegePrincipal?.principal?.let {
+            InstructorConverter.convertToResponse(
+                    instructorService.getById(it)
+            )
+        }
         val collegeResponse = Response()
                 .success(true)
-                .data(CollegeConverter.convertToResponse(college))
+                .data(PrincipalAssignResponse(id = college.id!!, principal = principal!!))
                 .contentType("/application/json")
                 .httpStatusCode(HttpStatus.OK.value())
                 .statusMessage("Success")
-        return ResponseEntity(collegeResponse,HttpStatus.OK)
+        return ResponseEntity(collegeResponse, HttpStatus.OK)
     }
 
     @GetMapping("/{collegeId}")
-    fun getCollegeById(@PathVariable("collegeId", required = true) collegeId:Int): ResponseEntity<Response> {
-        val college = CollegeConverter.convertToDetailedResponse(collegeService.getById(collegeId))
-        val collegeResponse = Response()
+    fun getCollegeById(@PathVariable("collegeId", required = true) collegeId: Int): ResponseEntity<Response> {
+        val college = collegeService.getById(collegeId)
+        val principal = college.collegePrincipal?.principal?.let { instructorService.getById(it) }
+        val collegeResponse = CollegeConverter.convertToDetailedResponse(college = college, principal = principal)
+        val response = Response()
                 .success(true)
-                .data(college)
+                .data(collegeResponse)
                 .contentType("application/json")
                 .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
-        return ResponseEntity(collegeResponse, HttpStatus.OK)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     @PutMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun updateCollege(@Valid @RequestBody collegeRequest: CollegeRequest): ResponseEntity<Response> {
-        val college = CollegeConverter.convertToDetailedResponse(collegeService.update(collegeRequest))
-        val collegeResponse = Response()
+        val college = collegeService.update(collegeRequest)
+        val principal = college.collegePrincipal?.principal?.let { instructorService.getById(it) }
+        val collegeResponse = CollegeConverter.convertToDetailedResponse(college = college, principal = principal)
+        val response = Response()
                 .success(true)
-                .data(college)
+                .data(collegeResponse)
                 .contentType("application/json")
                 .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
-        return ResponseEntity(collegeResponse, HttpStatus.OK)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     @DeleteMapping("/{collegeId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    fun deleteCollegeById(@PathVariable("collegeId", required = true) collegeId:Int): ResponseEntity<Response> {
+    fun deleteCollegeById(@PathVariable("collegeId", required = true) collegeId: Int): ResponseEntity<Response> {
         collegeService.deleteById(collegeId)
         val collegeResponse = Response()
                 .success(true)

@@ -16,7 +16,7 @@ class CsvConverter () {
                 firstName = csvUserRequest.firstname,
                 lastName = csvUserRequest.lastname,
                 email = csvUserRequest.email,
-                DOB = LocalDate.parse(csvUserRequest.DOB, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                DOB = LocalDate.parse(csvUserRequest.dob, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                 gender = Gender.valueOf(csvUserRequest.gender),
                 phone = csvUserRequest.phone,
                 country = csvUserRequest.country,
@@ -31,7 +31,7 @@ class CsvConverter () {
                     firstName = csvUserRequest.firstname,
                     lastName = csvUserRequest.lastname,
                     email = csvUserRequest.email,
-                    DOB = LocalDate.parse(csvUserRequest.DOB, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    DOB = LocalDate.parse(csvUserRequest.dob, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                     gender = Gender.valueOf(csvUserRequest.gender),
                     phone = csvUserRequest.phone,
                     country = csvUserRequest.country,
@@ -47,7 +47,7 @@ class CsvConverter () {
                 firstName = csvUserRequest.firstname,
                 lastName = csvUserRequest.lastname,
                 gender = csvUserRequest.gender,
-                DOB = csvUserRequest.DOB,
+                dob = csvUserRequest.dob,
                 phone = csvUserRequest.phone,
                 country = csvUserRequest.country
             )

@@ -26,7 +26,7 @@ data class CsvUserRequest(
         @Size(min = 6, max = 20)
         var country: String,
 
-        val DOB: String,
+        val dob: String,
         val gender: String,
         val phone: String,
         val aadhar: Long

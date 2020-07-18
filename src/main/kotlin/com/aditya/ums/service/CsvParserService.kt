@@ -29,7 +29,7 @@ class CsvParserService {
                             firstname = csvRecord["firstname"],
                             lastname = csvRecord["lastname"],
                             gender = csvRecord["gender"].toUpperCase(),
-                            DOB = csvRecord["DOB"],
+                            dob = csvRecord["DOB"],
                             phone = csvRecord["phone"],
                             country = csvRecord["country"],
                             aadhar = csvRecord["aadhar"].toLong()

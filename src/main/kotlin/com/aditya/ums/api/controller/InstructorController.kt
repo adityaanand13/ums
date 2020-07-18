@@ -28,10 +28,19 @@ class InstructorController(
         return ResponseEntity(instructorsResponse, HttpStatus.OK)
     }
 
+    @GetMapping("/username/{username}")
+    fun getUsernames(@PathVariable username: String): ResponseEntity<Response>{
+        val instructorsResponse = Response()
+                .success(true)
+                .data(instructorService.searchUsernames(username))
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(instructorsResponse, HttpStatus.OK)
+    }
+
     @PostMapping("/")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun postInstructor(@Valid @RequestBody instructorRequest: InstructorRequest) : ResponseEntity<Response> {
-        println(instructorRequest.username)
         val instructor = instructorService.createInstructor(instructorRequest)
         val instructorResponse = Response()
                 .success(true)

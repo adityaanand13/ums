@@ -4,7 +4,6 @@ import com.aditya.ums.api.payload.ApiResponse
 import com.aditya.ums.api.request.UserRequest
 import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.UserConverter
-import com.aditya.ums.entity.User
 import com.aditya.ums.security.UserPrincipal
 import com.aditya.ums.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,7 +24,6 @@ class UserController(
     @GetMapping("/")
     fun getMyProfile(): ResponseEntity<Response>{
         val user = SecurityContextHolder.getContext().authentication.principal as UserPrincipal
-        print(userService.getOneUser(user.id).id)
         val userResponse = UserConverter.convertToResponse(userService.getOneUser(user.id))
         val response = Response()
                 .success(true)
@@ -59,21 +57,17 @@ class UserController(
     }
 
     //search a user by id
-    @GetMapping("user/search-id/{id}")
+    @GetMapping("/search-id/{id}")
     fun getUser(@PathVariable("id", required = true) id: Int): ResponseEntity<*>{
-        val user = userService.getOneUser(id)
+        val user = UserConverter.convertToResponse(userService.getOneUser(id))
+        println(user.id)
 
-        if (user==null){
-            return ResponseEntity(ApiResponse(false, "User Not Found"),
-                    HttpStatus.BAD_REQUEST)
-        }
-
-        val usersResponse = Response()
+        val userResponse = Response()
                 .success(true)
                 .data(user)
                 .contentType("application/json")
                 .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
-        return ResponseEntity(usersResponse, HttpStatus.OK)
+        return ResponseEntity(userResponse, HttpStatus.OK)
     }
 
     //warning only admins allowed

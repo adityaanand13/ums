@@ -12,7 +12,7 @@ class SignUpConverter {
                     firstName = signUpRequest.firstname,
                     lastName = signUpRequest.lastname,
                     email = signUpRequest.email,
-                    DOB = signUpRequest.DOB,
+                    DOB = signUpRequest.dob,
                     gender = signUpRequest.gender,
                     phone = signUpRequest.phone
             )

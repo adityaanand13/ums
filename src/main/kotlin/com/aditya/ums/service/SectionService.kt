@@ -1,6 +1,5 @@
 package com.aditya.ums.service
 
-import com.aditya.ums.api.request.GroupRequest
 import com.aditya.ums.api.request.SectionRequest
 import com.aditya.ums.converter.SectionConverter
 import com.aditya.ums.entity.Group

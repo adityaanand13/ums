@@ -50,25 +50,16 @@ class Instructor(
 
         country: String,
 
-        roles: MutableList<Role> = mutableListOf<Role>()
+        roles: MutableList<Role> = mutableListOf<Role>(),
 
+        @Column(name = "principal")
+        var principal: Boolean? = false,
 
-/*
-    refers to instructor property in the course class @ JoinColumn
-     to help find the associated courses for the instructor
-     the delete cascade is not defined because
-     when we want to delete the course we dont want to delete the instructor and vice versa
- */
-//    @OneToMany(
-//        mappedBy = "instructor",
-//        cascade = [
-//            CascadeType.DETACH,
-//            CascadeType.MERGE,
-//            CascadeType.PERSIST,
-//            CascadeType.REFRESH
-//        ]
-//    )//        fetch = FetchType.EAGER,
-//    var courses: MutableList<Course>? = null
+        @Column(name = "headMentor")
+        var headMentor: Boolean? = false,
+
+        @Column(name = "mentor")
+        var mentor: Boolean? = false
 ) : User(
         id = id,
         username = username,

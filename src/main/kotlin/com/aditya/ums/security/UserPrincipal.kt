@@ -2,7 +2,6 @@ package com.aditya.ums.security
 
 import com.aditya.ums.entity.Role
 import com.aditya.ums.entity.User
-import com.aditya.ums.exception.BadRequestException
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority

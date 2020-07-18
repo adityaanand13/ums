@@ -27,7 +27,7 @@ data class SignUpRequest(@NotBlank
                     @Size(min = 6, max = 20)
                     var password: String,
 
-                         val DOB: LocalDate,
+                         val dob: LocalDate,
                          val gender: Gender,
                          val phone: String
 )

@@ -103,7 +103,7 @@ class Student(
                 joinColumns = [JoinColumn(name = "student_id")],
                 inverseJoinColumns = [JoinColumn(name = "group_id")]
         )
-        private var group: Group? = null
+        public var group: Group? = null
 
 //    @OneToMany(mappedBy = "student_id")
 //    var attendances: MutableList<Attendance> = arrayListOf()

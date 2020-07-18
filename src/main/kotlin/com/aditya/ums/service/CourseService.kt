@@ -5,9 +5,11 @@ import com.aditya.ums.converter.CourseConverter
 import com.aditya.ums.entity.Batch
 import com.aditya.ums.entity.Course
 import com.aditya.ums.entity.Semester
+import com.aditya.ums.exception.ConflictException
 import com.aditya.ums.repository.CourseRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.client.HttpClientErrorException
 
 @Service
 class CourseService(
@@ -36,9 +38,14 @@ class CourseService(
     }
 
     @Transactional
+    @Throws(ConflictException::class)
     fun addBatch(courseID: Int, startYear: Int): Course {
         var course = courseRepository.getOne(courseID)
-        val batch: Batch = batchService.create("${course.code}:${startYear}-${(startYear + course.duration)}")
+        val batchName = "${course.code}:${startYear}-${(startYear + course.duration)}"
+        if(batchService.existsByName(batchName)){
+            throw ConflictException(fieldName = "name", fieldValue = startYear)
+        }
+        val batch: Batch = batchService.create(batchName);
         val totalSemester = course.duration * course.semesterPerYear
         for (i in 1..totalSemester) {
             val semester: Semester = Semester(

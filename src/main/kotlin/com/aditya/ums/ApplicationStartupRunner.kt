@@ -1,17 +1,10 @@
 package com.aditya.ums
 
-import com.aditya.ums.entity.Role
-import com.aditya.ums.repository.UserRepository
-import com.aditya.ums.entity.User
-import com.aditya.ums.enums.RoleType
-import com.aditya.ums.enums.UserType
-import com.aditya.ums.repository.RoleRepository
 import com.aditya.ums.service.UserService
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import java.io.Console
 

@@ -17,9 +17,6 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest
-import org.springframework.boot.actuate.context.ShutdownEndpoint
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 
 //todo throw not found exception in JPA user
 @Configuration
@@ -78,13 +75,10 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/**/*.jpg",
                         "/**/*.html",
                         "/**/*.css",
-                        "/swagger-resources/**",
-                        "/swagger-ui.html",
-                        "/v2/api-docs",
                         "/webjars/**",
                         "/**/*.js")
                     .permitAll()
-                .antMatchers("/api/auth/**")
+                .antMatchers("/api/auth/login")
                 .permitAll()
                 //todo add api for username and email availability
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")

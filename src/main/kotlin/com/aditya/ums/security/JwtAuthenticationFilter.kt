@@ -1,7 +1,5 @@
 package com.aditya.ums.security
 
-import com.aditya.ums.exception.InternalServerError
-import com.aditya.ums.exception.ResourceNotFoundException
 import io.jsonwebtoken.SignatureException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

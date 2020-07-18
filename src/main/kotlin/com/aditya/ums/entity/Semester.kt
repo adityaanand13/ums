@@ -16,8 +16,8 @@ class Semester(
         @Column(name = "seq")
     var seq: Int,
 
-        @Column(name = "isActive")
-    var isActive: Boolean = false,
+        @Column(name = "active")
+    var active: Boolean = false,
 
         @ManyToOne(
         cascade = [

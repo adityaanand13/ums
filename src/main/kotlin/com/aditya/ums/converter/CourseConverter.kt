@@ -4,7 +4,7 @@ import com.aditya.ums.api.request.CourseRequest
 import com.aditya.ums.api.response.CourseResponse
 import com.aditya.ums.entity.Course
 
-class CourseConverter {
+class  CourseConverter {
     companion object {
 
         fun convertToResponses(courses: List<Course>): List<CourseResponse>{
