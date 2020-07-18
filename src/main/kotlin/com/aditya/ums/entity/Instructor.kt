@@ -4,10 +4,12 @@ import com.aditya.ums.enums.*
 import java.time.LocalDate
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.PrimaryKeyJoinColumn
 import javax.persistence.Table
 
 @Entity
 @Table(name = "instructor")
+@PrimaryKeyJoinColumn(name = "id")
 class Instructor(
 
         id: Int = 0,
@@ -34,9 +36,9 @@ class Instructor(
 
         category: Category,
 
-        aadhar: Long,
+        aadhar: Long = 0,
 
-        userType: UserType,
+        userType: UserType = UserType.INSTRUCTOR,
 
         address: String,
 
@@ -44,31 +46,40 @@ class Instructor(
 
         state: String,
 
-        pinCode: String,
+        pinCode: Int,
 
         country: String,
 
-        roles: MutableSet<Role> = mutableSetOf<Role>(),
+        roles: MutableList<Role> = mutableListOf<Role>(),
 
+        @Column(name = "principal")
+        var principal: Boolean? = false,
 
-        @Column(name = "employee_id")
-        var employeeID: Int
+        @Column(name = "headMentor")
+        var headMentor: Boolean? = false,
 
-/*
-    refers to instructor property in the course class @ JoinColumn
-     to help find the associated courses for the instructor
-     the delete cascade is not defined because
-     when we want to delete the course we dont want to delete the instructor and vice versa
- */
-//    @OneToMany(
-//        mappedBy = "instructor",
-//        cascade = [
-//            CascadeType.DETACH,
-//            CascadeType.MERGE,
-//            CascadeType.PERSIST,
-//            CascadeType.REFRESH
-//        ]
-//    )//        fetch = FetchType.EAGER,
-//    var courses: MutableList<Course>? = null
-) : User(id, username, password, firstName, lastName, email, DOB, gender, phone, blood, religion, category, aadhar, userType, address, city, state, pinCode, country, roles)
+        @Column(name = "mentor")
+        var mentor: Boolean? = false
+) : User(
+        id = id,
+        username = username,
+        password = password,
+        firstName = firstName,
+        lastName = lastName,
+        email = email,
+        DOB = DOB,
+        gender = gender,
+        phone = phone,
+        blood = blood,
+        religion = religion,
+        category = category,
+        aadhar = aadhar,
+        userType = userType,
+        address = address,
+        city = city,
+        state = state,
+        pinCode = pinCode,
+        country = country,
+        roles = roles
+)
 

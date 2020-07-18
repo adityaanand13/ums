@@ -1,6 +1,7 @@
 package com.aditya.ums.enums
 
 enum class UserType (userType: String) {
+    SUPER("super admin"),
     ADMIN("admin"),
     PRINCIPAL("principal"),
     INSTRUCTOR("instructor"),

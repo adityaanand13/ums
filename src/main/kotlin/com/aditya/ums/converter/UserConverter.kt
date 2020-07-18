@@ -6,14 +6,18 @@ import com.aditya.ums.entity.User
 
 class UserConverter {
     companion object {
+        fun convertToResponses(users: List<User>): List<UserResponse>{
+            return users.map { user -> UserConverter.convertToResponse(user) }
+        }
+
         fun convertToResponse(user: User) : UserResponse {
             return UserResponse(
                 id = user.id,
-                    username = user.username ?: "",
+                username = user.username ?: "",
                 firstName = user.firstName,
                 lastName = user.lastName,
                 email = user.email,
-                DOB = user.DOB,
+                dob = user.DOB,
                 gender = user.gender,
                 phone = user.phone,
                 blood = user.blood,
@@ -36,14 +40,13 @@ class UserConverter {
                 firstName = userRequest.firstName,
                 lastName = userRequest.lastName,
                 email = userRequest.email,
-                DOB = userRequest.DOB,
+                DOB = userRequest.dob,
                 gender = userRequest.gender,
                 phone = userRequest.phone,
                 blood = userRequest.blood,
                 religion = userRequest.religion,
                 category = userRequest.category,
                 aadhar = userRequest.aadhar,
-                userType = userRequest.userType,
                 address = userRequest.address,
                 city = userRequest.city,
                 state = userRequest.state,

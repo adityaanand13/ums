@@ -25,7 +25,7 @@ class Subject (
         ]
     )
     @JoinColumn(name = "semester_id")
-    var semester: Semester
+    var semester: Semester? = null
 
 //    @OneToMany(mappedBy = "subject_id")
 //    var attendances: MutableList<Attendance> = arrayListOf()

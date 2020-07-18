@@ -13,9 +13,6 @@ class Batch (
     @Column(name = "name")
     var name: String,
 
-    @Column(name = "description")
-    var description: String,
-
     //batch should be associated with courses
     @ManyToOne(
         cascade = [

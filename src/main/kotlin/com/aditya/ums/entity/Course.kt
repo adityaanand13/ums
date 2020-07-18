@@ -4,37 +4,44 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "course")
-class Course (
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    var id: Int? = null,
+class Course(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id")
+        var id: Int? = null,
 
-    @Column(name = "name")
-    var name: String,
+        @Column(name = "name")
+        var name: String,
 
-    @Column(name = "description")
-    var description: String,
+        @Column(name = "description")
+        var description: String,
 
-    @Column(name = "duration")
-    var duration: Int,
+        @Column(name = "code")
+        var code: String,
 
-    //course should be associated with college
-    @ManyToOne(
-        cascade = [
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-        ]
-    )
-    @JoinColumn(name = "college_id")
-    var college: College? = null,
+        @Column(name = "duration")
+        var duration: Int,
+
+        @Column(name = "semesterPerYear")
+        var semesterPerYear: Int,
+
+        //course should be associated with college
+        @ManyToOne(
+                cascade = [
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH
+                ]
+        )
+        @JoinColumn(name = "college_id")
+        var college: College? = null,
 //
-    // One course can have multiple batches
-    @OneToMany(
-            mappedBy = "course",
-            cascade = [CascadeType.ALL]
-    )//        fetch = FetchType.EAGER,
-    var batches: MutableList<Batch> = arrayListOf()
+        // One course can have multiple batches
+        @OneToMany(
+                mappedBy = "course",
+                cascade = [CascadeType.ALL],
+                fetch = FetchType.LAZY
+        )
+        var batches: MutableList<Batch> = arrayListOf()
 )

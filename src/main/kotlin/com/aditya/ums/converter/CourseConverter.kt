@@ -4,7 +4,7 @@ import com.aditya.ums.api.request.CourseRequest
 import com.aditya.ums.api.response.CourseResponse
 import com.aditya.ums.entity.Course
 
-class CourseConverter {
+class  CourseConverter {
     companion object {
 
         fun convertToResponses(courses: List<Course>): List<CourseResponse>{
@@ -15,8 +15,10 @@ class CourseConverter {
             return CourseResponse(
                     id = course.id,
                     name = course.name,
+                    code = course.code,
                     description = course.description,
                     duration = course.duration,
+                    semesterPerYear = course.semesterPerYear,
                     batches = BatchConverter.convertToResponses(course.batches)
             )
         }
@@ -25,8 +27,10 @@ class CourseConverter {
             return Course(
                     id = courseRequest.id,
                     name = courseRequest.name,
+                    code = courseRequest.code,
                     description = courseRequest.description,
-                    duration = courseRequest.duration
+                    duration = courseRequest.duration,
+                    semesterPerYear = courseRequest.semesterPerYear
             )
         }
     }

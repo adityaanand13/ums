@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CollegeRepository: JpaRepository<College, Int> {
     fun findFirstByName(name: String): College
+    fun getById(id: Int): College
 }

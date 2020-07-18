@@ -67,14 +67,21 @@ open class User(
         open var state: String = "",
 
         @Column(name = "pin_code")
-        open var pinCode: String = "",
+        open var pinCode: Int = 0,
 
         @Column(name = "country")
         open var country: String = "India",
 
-        @ManyToMany(fetch = FetchType.EAGER)
-        @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")], inverseJoinColumns = [JoinColumn(name = "role_id")])
-        open var roles: MutableSet<Role> = mutableSetOf()
+        //todo add created at, created by, modified at, modified by
+
+        //one users can have many roles
+        @ManyToMany(cascade = [CascadeType.MERGE], fetch = FetchType.EAGER)
+        @JoinTable(
+                name = "user_roles",
+                joinColumns = [JoinColumn(name = "user_id")],
+                inverseJoinColumns = [JoinColumn(name = "role_id")]
+        )
+        open var roles: MutableList<Role> = mutableListOf()
 
 )
 

@@ -1,6 +1,5 @@
 package com.aditya.ums.service
 
-import com.aditya.ums.api.request.GroupRequest
 import com.aditya.ums.api.request.SectionRequest
 import com.aditya.ums.converter.SectionConverter
 import com.aditya.ums.entity.Group
@@ -21,10 +20,10 @@ class SectionService (
         return sectionRepository.getOne(id)
     }
 
-    fun addGroup(sectionID: Int, groupRequest: GroupRequest): Section {
+    fun addGroup(sectionID: Int): Section {
         var section = sectionRepository.getOne(sectionID)
         if(section!= null){
-            val group: Group = groupService.create(groupRequest)
+            val group: Group = groupService.create("${section.name}${section.groups.size+1}")
             group.section= section
             section.groups.add(group)
             section = sectionRepository.save(section)

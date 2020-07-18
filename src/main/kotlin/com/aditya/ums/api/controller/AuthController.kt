@@ -1,13 +1,8 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.payload.ApiResponse
 import com.aditya.ums.api.payload.JwtAuthenticationResponse
 import com.aditya.ums.api.payload.LoginRequest
-import com.aditya.ums.api.request.UserRequest
-import com.aditya.ums.converter.UserConverter
-import com.aditya.ums.repository.RoleRepository
-import com.aditya.ums.repository.StudentRepository
-import com.aditya.ums.repository.UserRepository
+import com.aditya.ums.api.response.Response
 import com.aditya.ums.security.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -15,40 +10,21 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+
 
 @RestController
 @RequestMapping("/api/auth")
-class AuthController {
+class AuthController(
+        @Autowired private var authenticationManager: AuthenticationManager,
+        @Autowired private var tokenProvider: JwtTokenProvider
+) {
 
-    @Autowired
-    internal var authenticationManager: AuthenticationManager? = null
+    @PostMapping("/login")
+    fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<Response> {
 
-    @Autowired
-    internal var userRepository: UserRepository? = null
-
-    @Autowired
-    internal var studentRepository: StudentRepository? = null
-
-    @Autowired
-    internal var roleRepository: RoleRepository? = null
-
-    @Autowired
-    internal var passwordEncoder: PasswordEncoder? = null
-
-    @Autowired
-    internal var tokenProvider: JwtTokenProvider? = null
-
-    @PostMapping("/signin")
-    fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): ResponseEntity<*> {
-
-        val authentication = authenticationManager!!.authenticate(
+        val authentication = authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
                         loginRequest.usernameOrEmail,
                         loginRequest.password
@@ -57,38 +33,52 @@ class AuthController {
 
         SecurityContextHolder.getContext().authentication = authentication
 
-        val jwt = tokenProvider!!.generateToken(authentication)
-        return ResponseEntity.ok<Any>(JwtAuthenticationResponse(jwt))
+        val jwt = tokenProvider.generateToken(authentication)
+        val response = Response()
+                .success(true)
+                .data(JwtAuthenticationResponse(jwt))
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
-    @PostMapping("/signup")
-    fun registerUser(@Valid @RequestBody signUpRequest: UserRequest): ResponseEntity<*> {
-        if (userRepository!!.existsByUsername(signUpRequest.username)) {
-            return ResponseEntity(ApiResponse(false, "Username is already taken!"),
-                    HttpStatus.BAD_REQUEST)
-        }
-
-        if (userRepository!!.existsByEmail(signUpRequest.email)!!) {
-            return ResponseEntity(ApiResponse(false, "Email Address already in use!"),
-                    HttpStatus.BAD_REQUEST)
-        }
-
-        // Creating user's account -- STUDENT
-        val user = UserConverter.convertToEntity(userRequest = signUpRequest)
-
-        user.password = passwordEncoder!!.encode(user.password)
-
-//        val userRole = roleRepository!!.findByName(RoleName.ROLE_USER)
-//                .orElseThrow { AppException("User Role not set.") }
-
-//        user.roles = mutableSetOf<Role>(userRole)
-
-        val result = userRepository!!.save(user)
-
-        val location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/users/{username}")
-                .buildAndExpand(result.username).toUri()
-
-        return ResponseEntity.created(location).body<Any>(ApiResponse(true, "User registered successfully"))
+    @GetMapping("/verify")
+    fun verify(): ResponseEntity<Any> {
+        return ResponseEntity(
+                mapOf("data" to mapOf("valid" to true)),
+                HttpStatus.OK)
     }
+
+    //to be moved to admin
+//    @PostMapping("/signup")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    fun registerUser(@Valid @RequestBody signUpRequest: SignUpRequest): ResponseEntity<Response> {
+//        if (userRepository.existsByUsername(signUpRequest.username)) {
+//            return ResponseEntity(Response()
+//                    .success(false)
+//                    .data(signUpRequest.username)
+//                    .statusMessage("Username Already In use")
+//                    .httpStatusCode(HttpStatus.BAD_REQUEST.value()),
+//                    HttpStatus.BAD_REQUEST)
+//        }
+//
+//        if (userRepository.existsByEmail(signUpRequest.email)) {
+//            return ResponseEntity(Response()
+//                    .success(false)
+//                    .data(signUpRequest.email)
+//                    .statusMessage("Email Already In use")
+//                    .httpStatusCode(HttpStatus.BAD_REQUEST.value()),
+//                    HttpStatus.BAD_REQUEST)
+//        }
+//        // Creating default user's account --
+//        val user = SignUpConverter.convertToEntity(signUpRequest = signUpRequest)
+//
+//        val result = userService.createUser(signUpRequest)
+//
+//        val response = Response()
+//                .success(true)
+//                .httpStatusCode(HttpStatus.OK.value())
+//                .statusMessage("User registered successfully")
+//        return ResponseEntity(response, HttpStatus.OK)
+//    }
 }

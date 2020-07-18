@@ -7,6 +7,7 @@ import com.aditya.ums.service.InstructorService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -17,7 +18,7 @@ class InstructorController(
         @Autowired private val instructorService: InstructorService
 ) {
     @GetMapping("/")
-    fun getStudents(): ResponseEntity<Response> {
+    fun getInstructors(): ResponseEntity<Response> {
         val instructor = instructorService.getAll()
         val instructorsResponse = Response()
                 .success(true)
@@ -27,9 +28,20 @@ class InstructorController(
         return ResponseEntity(instructorsResponse, HttpStatus.OK)
     }
 
+    @GetMapping("/username/{username}")
+    fun getUsernames(@PathVariable username: String): ResponseEntity<Response>{
+        val instructorsResponse = Response()
+                .success(true)
+                .data(instructorService.searchUsernames(username))
+                .contentType("application/json")
+                .httpStatusCode(HttpStatus.OK.value()).statusMessage("success")
+        return ResponseEntity(instructorsResponse, HttpStatus.OK)
+    }
+
     @PostMapping("/")
-    fun postStudent(@Valid @RequestBody instructorRequest: InstructorRequest) : ResponseEntity<Response> {
-        val instructor = instructorService.create(instructorRequest)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    fun postInstructor(@Valid @RequestBody instructorRequest: InstructorRequest) : ResponseEntity<Response> {
+        val instructor = instructorService.createInstructor(instructorRequest)
         val instructorResponse = Response()
                 .success(true)
                 .data(InstructorConverter.convertToResponse(instructor))

@@ -1,6 +1,5 @@
 package com.aditya.ums.api.controller
 
-import com.aditya.ums.api.request.GroupRequest
 import com.aditya.ums.api.response.Response
 import com.aditya.ums.converter.SectionConverter
 import com.aditya.ums.service.SectionService
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 @RestController
 @ResponseBody
@@ -29,10 +27,9 @@ class SectionController(
 
     @PostMapping("/{sectionId}/add-group")
     fun addGroup(
-            @PathVariable("sectionId", required = true) sectionId:Int,
-            @Valid @RequestBody groupRequest: GroupRequest
+            @PathVariable("sectionId", required = true) sectionId:Int
     ): ResponseEntity<Response> {
-        val section = SectionConverter.convertToResponse(sectionService.addGroup(sectionId, groupRequest))
+        val section = SectionConverter.convertToResponse(sectionService.addGroup(sectionId))
         val sectionResponse = Response()
                 .success(true)
                 .data(section)

@@ -8,6 +8,6 @@ class HomeController {
 
     @GetMapping("/getHome")
     fun getHome(): String{
-        return "{\"msg\": \"Hello\"}"
+        return "index"
     }
 }
